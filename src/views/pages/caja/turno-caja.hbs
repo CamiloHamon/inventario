@@ -62,7 +62,8 @@
                         <tbody></tbody>
                     </table>
                 </div>
-                <div class="py-1 text-center z-index-custom bg-white border-up-red border-down-red subtotal borderMobileSubtotal">
+                <div
+                    class="py-1 text-center z-index-custom bg-white border-up-red border-down-red subtotal borderMobileSubtotal">
                     <div class="row mx-0 h-100 align-content-center">
                         <div class="col-3 red font-weight-bold">Subtotal:</div>
                         <div class="col-9 text-right red font-weight-bold">$ <span id="total">0</span></div>
@@ -180,5 +181,51 @@
         </div>
     </div>
 </div>
+
+{{!-- Modal Cash Box --}}
+
+<div class="modal fade" id="modal-box" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="modal-box-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form id="send-cash">
+                <div class="modal-header justify-content-center">
+                    <h5 class="modal-title text-center">¿Cuánto hay en la caja?</h5>
+                </div>
+                <div class="modal-body d-flex flex-column align-content-center align-items-center">
+                    <div class="alert alert-warning d-none" role="alert" id="alert-cash-box">
+                    </div>
+                    <p class="text-center">Antes registrar, debe indicar cuánto hay en la caja.</p>
+                    <div class="input-group mb-3 col-lg-7">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">$</span>
+                        </div>
+                        <input type="number" class="form-control" name="cash" id="input-cash">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{!-- Modal Check Cash Box --}}
+<div class="modal fade" id="modal-check-box" data-backdrop="static" data-keyboard="false" tabindex="-1"
+    aria-labelledby="modal-check-box-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-auto text-center"><i class="fas fa-check-circle text-success check-success my-3 blockMobile"></i></div>
+                    <div class="col-auto text-center"><span>La caja empezó con <b id="check-b"></b></span></div>
+                    <div class="col-12 text-center"><button type="button" class="btn btn-primary" id="accepted-cash" data-dismiss="modal">Aceptar</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/js/caja/index.js" type="module"></script>

@@ -1,5 +1,6 @@
 const moment = require('../middlewares/moment');
 const turnoModel = require('../models/turnoModel');
+const cashBoxModel = require('../models/cashBoxModel');
 const flMessage = require('../helpers/flash');
 const endTurn = require('../helpers/endTurn');
 const turnController = {};
@@ -65,6 +66,30 @@ turnController.terminar = async (req, res, next) => {
 
 	res.redirect('/turno');
 };
+
+turnController.checkChashBox = async(req, res, next)=>{
+	const date = moment.toDay();
+	const cashToDay = await cashBoxModel.findByDate(date);
+	const result = cashToDay.length > 0 ? false: true;
+	return res.send(result);
+}
+
+turnController.saveChashBox = async(req, res, next)=>{
+	const date = moment.toDay();
+	const cashToDay = await cashBoxModel.findByDate(date);
+	let result = false;
+	if(!cashToDay.length > 0){
+		const idUser = req.user.idUser, turn = await turnoModel.findByIdUser(idUser, date);
+		if (turn.length >0) {
+			const { price } = req.body;
+			const insertCashBox = await cashBoxModel.insert(date, turn[0].idTurn, price);
+			if(insertCashBox){
+				result = true;
+			}
+		}
+	}
+	return res.send(result);
+}
 
 async function insertTurn(idUser) {
 	const date = moment.toDay(),

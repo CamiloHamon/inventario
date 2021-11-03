@@ -29,6 +29,10 @@ router.post(
 	turnoController.terminar
 );
 
+router.post('/check-cash-box', isLoggedIn, currentTurn, turnoController.checkChashBox);
+
+router.post('/save-cash-box', isLoggedIn, currentTurn, turnoController.saveChashBox);
+
 router.get('/turno/caja', isLoggedIn, currentTurn, cajaController.caja);
 
 router.get('/turno/caja/products', cajaController.products);

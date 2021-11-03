@@ -27,6 +27,47 @@ export async function App() {
 		$contCaja = d.getElementById('container-caja'),
 		$divCheckObs = d.getElementById('divCheckObs'),
 		$divCheckFiado = d.getElementById('divCheckFiado');
+
+	//request cash in a box
+
+	const $btnSendCash = d.getElementById('send-cash');
+	ajax.checkCashBox({
+		URL: '/check-cash-box',
+		CBSUCCESS: (response) => {
+			if(response.data){
+				$('#modal-box').modal('show');
+			}else{
+				d.getElementById('modal-box').remove();
+			}
+		}
+	});
+	
+	$btnSendCash.addEventListener('submit', (e)=>{
+		e.preventDefault();
+		const $priceCashBox = d.getElementById('input-cash');
+		if($priceCashBox.value > 49){
+			ajax.saveCashBox({
+				URL: '/save-cash-box',
+				price: $priceCashBox.value,
+				CBSUCCESS: (res)=>{ 
+					if(res.data){
+						$('#modal-box').modal('hide');
+						d.getElementById('check-b').textContent = '$' + new Intl.NumberFormat("es-CO", "COP", 2, 2500000).format($priceCashBox.value);
+						$('#modal-check-box').modal('show');
+						setTimeout(() => {
+							d.getElementById('modal-box').remove();
+						}, 1000);
+					}
+				}
+			});
+		}else{
+			const $alertCashBox = d.getElementById('alert-cash-box');
+			$alertCashBox.classList.remove('d-none');
+			$alertCashBox.textContent = `El valor debe ser mínimo de $50.`;
+		}
+
+	});
+
 	//buttons number
 	const $multiply = d.getElementById('multiply'),
 		$delete = d.getElementById('delete');
@@ -200,7 +241,6 @@ export async function App() {
 		if (e.target.matches('#registrar')) {
 			const $divFinally = d.getElementById('div-finally');
 			if (valInNoEmpty($divFinally, listProducts)) {
-				disabledButtons();
 
 				if (checkFiado) await getClients();
 				else clients = null;
@@ -337,6 +377,7 @@ export async function App() {
 	function replaceTotal() {
 		total = 0;
 		for (const list of listProducts) {
+			console.log(list.price);
 			total += getTotal(list.price, list.amount);
 		}
 		$total.textContent = updateTotal(total);

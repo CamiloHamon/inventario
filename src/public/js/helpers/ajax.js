@@ -125,6 +125,40 @@ ajax.updateLoanPay = (props) => {
 		});
 };
 
+ajax.checkCashBox = (props) => {
+	const { URL, CBSUCCESS, CBERROR } = props;
+
+	axios({
+		method: 'post',
+		url: URL,
+	})
+		.then((response) => {
+			CBSUCCESS(response);
+		})
+		.catch((err) => {
+			CBERROR(err);
+		});
+};
+
+
+ajax.saveCashBox = (props) => {
+	const { URL, price, CBSUCCESS, CBERROR } = props;
+
+	axios({
+		method: 'post',
+		url: URL,
+		data: {
+			price,
+		},
+	})
+		.then((response) => {
+			CBSUCCESS(response);
+		})
+		.catch((err) => {
+			CBERROR(err);
+		});
+};
+
 ajax.saldar = (props) => {
 	const { URL, trust, CBSUCCESS, CBERROR } = props;
 
