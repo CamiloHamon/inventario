@@ -1,0 +1,86 @@
+<link rel="stylesheet" href="/css/header-turno.css">
+<div class="container">
+    <div class="row justify-content-center border-down-red">
+        <div class="col-12 col-md-10 px-sm-0">
+            {{#if user.rol}}
+            <div class="d-sm-none" style="height: 61px;"></div>
+            {{else}}
+            <div class="d-sm-none" style="height: 58px;"></div>
+            {{/if}}
+            <div class="menu w-100" id="contentMenu">
+                <div class="d-lg-none bg-red border-down-red shadow">
+                    <nav class="navbar navbar-expand-lg navbar-light" id="nav">
+                        <a class="navbar-brand caja border-bottom-red" href="/turno/caja" id="caja">CAJA</a>
+                        <a class="navbar-brand border-bottom-red" href="/turno/gastos" id="gastos">GASTOS</a>
+                        <a class="navbar-brand border-bottom-red" href="/turno/vales" id="vales">VALES</a>
+                        <a class="navbar-brand border-bottom-red" href="/turno/bajas" id="bajas">BAJAS</a>
+                    </nav>
+                    <nav class="navbar navbar-expand-lg navbar-light" id="nav">
+                        <a class="navbar-brand border-bottom-red" href="/turno/pago" id="pago">P. TURNO</a>
+                        {{#if user.rol}}
+                        <a class="navbar-brand border-bottom-red" href="/turno/venta" id="venta">VENTA</a>
+                        {{/if}}
+                        <a class="navbar-brand border-bottom-red" href="/turno/fiados" id="fiados">FIADOS</a>
+                        <button type="submit" class="btn btn-danger btn-sm font-weight-bold" data-toggle="modal"
+                            data-target="#endTurn">FINALIZAR</button>
+                    </nav>
+                </div>
+                <div class="d-none d-lg-block">
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light p-1" id="nav">
+                        <a class="navbar-brand caja" href="/turno/caja" id="caja">CAJA</a>
+                        <a class="navbar-brand" href="/turno/gastos" id="gastos">GASTOS</a>
+                        <a class="navbar-brand" href="/turno/vales" id="vales">VALES</a>
+                        <a class="navbar-brand" href="/turno/bajas" id="bajas">BAJAS</a>
+                        <a class="navbar-brand" href="/turno/pago" id="pago">PAGO TURNO</a>
+                        {{#if user.rol}}
+                        <a class="navbar-brand" href="/turno/venta" id="venta">VENTA</a>
+                        {{/if}}
+                        <a class="navbar-brand" href="/turno/fiados" id="fiados">FIADOS</a>
+                        <button type="submit" class="btn btn-danger btn-sm" data-toggle="modal"
+                            data-target="#endTurn">Terminar turno</button>
+                    </nav>
+                </div>
+                <div class="dropdown-divider d-sm-none m-0"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- modal terminar turno --}}
+<div class="modal fade" id="endTurn" tabindex="-1" role="dialog" aria-labelledby="endTurnCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <form action="/turno/terminar" method="POST" id="form-endTurn">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="endTurnLongTitle">Terminar Turno</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Está apunto de terminar el turno.
+                    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+                        <input type="checkbox" class="custom-control-input" id="sendReport" name="sendReport">
+                        <label class="custom-control-label" for="sendReport">Generar reporte de ventas y enviar
+                            por correo electronico.</label>
+                    </div>
+                    <div class="row justify-content-center align-content-center mt-3" id="report">
+                        <div class="row col-11 border rounded justify-content-center align-content-center d-none py-3"
+                            id="contentReport">
+                            <div class="col-auto text-right" id="icon"></div>
+                            <div class="col-auto" id="namePDF"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Terminar turno</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/header-turno/index.js" type="module"></script>

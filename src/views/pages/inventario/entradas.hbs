@@ -1,0 +1,73 @@
+{{>header}}
+{{>fecha}}
+<div class="container marginOutTurn" id="cont">
+    <div class="text-center" id="title">
+        <h4 class="red">ENTRADAS</h4>
+    </div>
+    <div class="row justify-content-center d-none ocultar" id="divSearch">
+        <div class="col-12 col-md-6">
+            <div class="input-group border-red rounded">
+                <input type="text" class="form-control border-0" placeholder="Buscar entrada" id="search-products">
+                <div class="input-group-prepend">
+                    <span class="input-group-text border-0 border-red-right-1px cursor-pointer" id="search-button">
+                        <i class="fas fa-search red"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row p-0 m-0 justify-content-center" id="alertasEntradas">
+        <div class="col-12 col-md-6 p-0 m-0">
+            {{>message}}
+        </div>
+    </div>
+    <div class="table-responsive mt-3 overflow tableFixHead d-none ocultar" id="divTable">
+        <table class="table table-striped table-hover" id="products-table">
+            <thead>
+                <tr>
+                    <th scope="col" class="sticky-prod-inv-act" style="z-index: 100;">Producto</th>
+                    <th scope="col" class="text-center">Entradas</th>
+                    <th scope="col" class="text-center">Precio</th>
+                    <th scope="col" class="text-center">Fecha</th>
+                    <th scope="col" class="text-center">Hora</th>
+                    <th scope="col" class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    {{>gestionInv}}
+</div>
+
+{{#each inputs}}
+<!-- Modal -->
+<div class="modal fade" id="deleteInput{{idInputProduct}}" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Entrada:
+                    <strong>{{name}}</strong>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center justify-content-center">
+                    <p>¿Está seguro de eliminar la entrada para <strong>{{name}}</strong> -
+                        Entradas: <strong>{{amountInput}}</strong>?</p>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <form action="/inventario/entradas/{{idInputProduct}}/eliminar" method="POST">
+                    <button type="submit" class="btn btn-primary">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/entradas/index.js" type="module"></script>

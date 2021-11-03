@@ -1,0 +1,137 @@
+{{>header}}
+{{>header-turno}}
+{{>fecha}}
+<div class="container">
+    <div class="text-center mb-2">
+        <h4 class="red">BAJAS</h4>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 px-md-0">
+            {{>message}}
+        </div>
+    </div>
+    {{#if discharged}}
+    <div class="table-responsive overflow tableTurno heBajas">
+        <table class="table table-striped table-hover mb-0">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">No.</th>
+                    <th scope="col" class="p-0">
+                        Producto
+                    </th>
+                    <th scope="col" class="text-center">
+                        <span class="d-none d-md-block">Cantidad</span>
+                        <span class="d-block d-md-none">Cant.</span>
+                    </th>
+                    <th scope="col" class="text-center">
+                        <span class="d-none d-md-block">Observación</span>
+                        <span class="d-block d-md-none">Obs.</span>
+                    </th>
+                    {{#if user.rol}}
+                    <th scope="col" class="text-center">
+                        Acciones
+                    </th>
+                    {{/if}}
+                </tr>
+            </thead>
+            <tbody>
+                {{#if user.rol}}
+                {{#each discharged}}
+                <tr>
+                    <td scope="row" class="text-center">{{no}}.</td>
+                    <td scope="col" class="p-0 py-2 py-md-0">{{name}}</td>
+                    <td scope="col" class="text-center">{{amount}}</td>
+                    <td scope="col" class="text-center text-capitalize">{{descripcion}}</td>
+                    <td scope="col" class="text-center p-0 p-md-1">
+                        <div class="row justify-content-center m-0">
+                            <div class="col-6 col-md-3 px-0">
+                                <a href="/turno/bajas/{{idDischarged}}/editar" class="white">
+                                    <button class="btn b-transparent">
+                                        <i class="fas fa-edit gray cursor-pointer"></i>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="col-5 col-md-3 px-0 text-center">
+                                <button class="btn b-transparent" data-toggle="modal"
+                                    data-target="#deleteBill{{idDischarged}}">
+                                    <i class="fas fa-trash red cursor-pointer"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Modal -->
+                <div class="modal fade" id="deleteBill{{idDischarged}}" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Baja:
+                                    <strong class="text-capitalize">{{name}}</strong>
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center justify-content-center">
+                                    <p>¿Está seguro de eliminar la baja <strong>[{{no}}] {{name}}</strong> con cantidad:
+                                        <strong>{{amount}}</strong>?
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-secondary blockMobile" data-dismiss="modal">Cancelar</button>
+                                <form action="/turno/bajas/{{idDischarged}}/eliminar" method="POST">
+                                    <button type="submit" class="btn btn-primary blockMobile">Eliminar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+                {{else}}
+                {{#each discharged}}
+                <tr>
+                    <th scope="row" class="text-center">{{no}}.</th>
+                    <td scope="col" class="p-0 py-2 py-md-0">{{name}}</td>
+                    <td scope="col" class="text-center">{{amount}}</td>
+                    <td scope="col" class="text-center text-capitalize">{{observation}}</td>
+                </tr>
+                {{/each}}
+                {{/if}}
+            </tbody>
+        </table>
+    </div>
+    {{else}}
+    <div class="row justify-content-center mt-md-3">
+        <div class="col-12 col-md-6 px-md-0">
+            <div class="alert alert-info py-5" role="alert">
+                <h4 class="alert-heading text-center pb-md-3">¡Aún no tiene Bajas!</h4>
+                <p class="text-justify">En esta parte se mostarán todos las bajas registradas en el día. Para poder
+                    registrar una baja, ir al
+                    botón rojo que dice: <strong>Agregar</strong>.</p>
+                <p class="text-justify">Una vez le de click en el botón, lo llevará a la sección de <strong>agregar una
+                        baja</strong>.
+                    Allí debe seleccionar <strong>el producto</strong>, la <strong>observación</strong> y la
+                    <strong>cantidad</strong>.
+                </p>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+
+    <div class="container bg-white sticky-inventario" style="height: 45px;">
+        <div class="row h-100 w-100 align-content-center">
+            <div class="col-12 mb-2 px-0 px-auto">
+                <div class="text-right">
+                    <a href="/turno/bajas/agregar" class="white">
+                        <button type="button" class="btn btn-primary blockMobile">
+                            Agregar Baja
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

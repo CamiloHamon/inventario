@@ -1,0 +1,214 @@
+<div class="d-md-none border-header fixed-top headerClass">
+    <div class="container">
+        <div class="row py-2 justify-content-center align-items-center">
+            {{#if user.rol}}
+            <div class="col-1 text-center px-2">
+                <button class="btn p-0 b-transparent" id="openNav">
+                    &#9776;
+                </button>
+            </div>
+            {{/if}}
+            <div class="col-2 pr-0">
+                <a href="/turno" class="col-auto px-0 justify-content-center">
+                    <img class="img-header" src="/img/mlogo.png" alt="Logo">
+                </a>
+            </div>
+            <div class="col-9 px-0">
+                <div class="row m-0 text-center align-items-center justify-content-end" id="rowContentHeader">
+                    <div class="col-auto px-0 d-none" id="menuTurnoCaja">
+                        <div class="d-sm-none z-10">
+                            <button type="button" class="btn-sm btn btn-primary trigger-menu">
+                                Menú
+                                <svg width="10" height="10" viewBox="0 0 24 24" id="menuMTurno">
+                                    <path d="M24 10h-10v-10h-4v10h-10v4h10v10h4v-10h10z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="notify-rounded"><i class="fas fa-bell red"></i></div>
+                    </div>
+                    <div class="col-auto text-right pl-0">
+                        <span class="name-user-header">{{user.name}}</span>
+                    </div>
+                    <div class="rounded col-auto pl-0 cursor-pointer">
+                        <div class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="col-12 px-0">
+                                {{#if user.imgProfile}}
+                                <img src="/img/imgProfile/{{user.imgProfile}}"
+                                    class="img-fluid rounded-circle profile-header" alt="">
+                                {{else}}
+                                <img src="/img/profile.png" class="img-fluid rounded-circle profile-header" alt="">
+                                {{/if}}
+                                <i class="fas fa-caret-down red"></i>
+                            </div>
+                        </div>
+                        <div class="dropdown-menu">
+                            {{#if user.rol}}
+                            <a class="dropdown-item" href="/cuenta">
+                                <i class="fas fa-user-cog red mr-2"></i>Mi cuenta
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/mis-gastos">
+                                <i class="fas fa-wallet red mr-2"></i>Mis gastos
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            {{/if}}
+                            <a class="dropdown-item" href="/logout">
+                                <i class="fas fa-sign-out-alt red mr-2"></i>Cerrar sesión
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mOverlay" id="mNav">
+    <div class="row justify-content-end align-items-center mx-0">
+        <div class="col-12">
+            <a href="" id="closeNav" class="text-right ">&times;</a>
+        </div>
+        <div class="col-12">
+            <img class="img-fluid" src="/img/logo.png" alt="Logo">
+        </div>
+    </div>
+    <div class="row justify-content-end align-items-center mx-0">
+        <div class="col-12 mOverlay-content">
+            <a class="nav-link" href="/turno">TURNO</a>
+
+            <a class="nav-link" href="/inventario">INVENTARIO</a>
+            <a class="subItem" href="/inventario/carta">CARTA</a>
+            <a class="subItem" href="/inventario/entradas">ENTRADAS</a>
+
+            <a class="nav-link" href="/empleados">EMPLEADOS</a>
+            <a class="subItem" href="/clientes">CLIENTES</a>
+
+            <a class="nav-link" href="/reportes">REPORTES</a>
+            <a class="subItem" href="/reportes/fiados">FIADOS</a>
+        </div>
+    </div>
+</div>
+
+{{!-- Desktop --}}
+<div class="d-none d-md-block border-header sticky-top headerClass">
+    <div class="container px-0">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light p-0 justify-content-center">
+            <div class="col-auto pl-0 order-1 d-lg-none">
+                <span class="cursor-pointer" id="openNav2">&#9776;</span>
+            </div>
+            <div class="col-6 col-lg-auto px-lg-0 border-2 d-none d-md-block center-img-header order-2">
+                <a href="/turno"><img class="img-header-desktop" src="/img/logo.png" alt="Logo"></a>
+            </div>
+            <div class="col d-md-none d-lg-block order-2 text-center">
+                <div class="collapse navbar-collapse mx-auto justify-content-center" id="navbarTogglerDemo03">
+                    <div class="dropdown-divider d-lg-none"></div>
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0 ul-header">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/turno" id="turno">TURNO <span
+                                    class="sr-only">(current)</span></a>
+                        </li>
+                        {{#if user.rol}}
+                        <li class="nav-item header-display-flex align-items-center mr-md-2">
+                            <a class="nav-link" href="/inventario" id="inventario">INVENTARIO</a>
+                            <div class="btn-group rounded d-none d-md-block px-0 cursor-pointer">
+                                <div class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <i class="fas fa-chevron-down red"></i>
+                                </div>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/inventario/carta">
+                                        CARTA
+                                    </a>
+                                    <a class="dropdown-item" href="/inventario/entradas">
+                                        ENTRADAS
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item d-md-none">
+                            <a class="nav-link" href="/inventario/carta">CARTA</a>
+                        </li>
+                        <li class="nav-item d-md-none">
+                            <a class="nav-link" href="/inventario/entradas">ENTRADAS</a>
+                        </li>
+                        <li class="nav-item header-display-flex align-items-center">
+                            <a class="nav-link" href="/empleados" id="empleados">EMPLEADOS</a>
+                            <div class="btn-group rounded d-none d-md-block px-0 cursor-pointer">
+                                <div class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <i class="fas fa-chevron-down red"></i>
+                                </div>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/clientes">
+                                        CLIENTES
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item header-display-flex align-items-center">
+                            <a class="nav-link" href="/reportes" id="reportes">
+                                REPORTES
+                            </a>
+                            <div class="btn-group rounded d-none d-md-block px-0 cursor-pointer">
+                                <div class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <i class="fas fa-chevron-down red"></i>
+                                </div>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/reportes/fiados">
+                                        FIADOS
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item d-md-none">
+                            <a class="nav-link" href="/reportes/fiados" id="empleados">FIADOS</a>
+                        </li>
+                        {{/if}}
+                    </ul>
+                </div>
+            </div>
+            <div class="col col-lg-auto pr-0 pr-lg-1 order-12">
+                <div class="row m-0 text-center align-items-center justify-content-end">
+                    <div class="col-auto">
+                        <div class="notify-rounded"><i class="fas fa-bell red"></i></div>
+                    </div>
+                    <div class="col-auto text-right pl-0">
+                        <span class="name-user-header">{{user.name}}</span>
+                    </div>
+                    <div class="rounded col-auto pl-0 cursor-pointer">
+                        <div class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="col-12 px-0">
+                                {{#if user.imgProfile}}
+                                <img src="/img/imgProfile/{{user.imgProfile}}"
+                                    class="img-fluid rounded-circle profile-header" alt="">
+                                {{else}}
+                                <img src="/img/profile.png" class="img-fluid rounded-circle profile-header" alt="">
+                                {{/if}}
+                                <i class="fas fa-caret-down red"></i>
+                            </div>
+                        </div>
+                        <div class="dropdown-menu">
+                            {{#if user.rol}}
+                            <a class="dropdown-item" href="/cuenta">
+                                <i class="fas fa-user-cog red mr-2"></i>Mi cuenta
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/mis-gastos">
+                                <i class="fas fa-wallet red mr-2"></i>Mis gastos
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            {{/if}}
+                            <a class="dropdown-item" href="/logout">
+                                <i class="fas fa-sign-out-alt red mr-2"></i>Cerrar sesión
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<script src="/js/header.js"></script>

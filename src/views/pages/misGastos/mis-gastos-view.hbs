@@ -1,0 +1,252 @@
+{{>header}}
+{{>fecha}}
+<div class="container">
+    <div class="text-center mb-3 marginOutTurn">
+        <h4 class="red text-uppercase">MIS GASTOS - {{month}}</h4>
+    </div>
+    <div class="row p-0 m-0 justify-content-center">
+        <div class="col-12 col-md-6 p-0 m-0">
+            {{>message}}
+        </div>
+    </div>
+    <div class="row justify-content-center f-size-mis-gastos">
+        <div class="col-11 col-md-9 my-auto shadow-lg rounded py-3">
+            <ul class="nav nav-tabs" id="myTab" role="tablist" style="justify-content:space-around">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="week-tab" data-toggle="tab" href="#week" role="tab"
+                        aria-controls="week" aria-selected="true">
+                        <span class="d-none d-md-block">Primera Semana</span>
+                        <span class="d-md-none">Semana 1</span>
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="partial-tab" data-toggle="tab" href="#partial" role="tab"
+                        aria-controls="partial" aria-selected="false">
+                        <span class="d-none d-md-block">Primera Quincena</span>
+                        <span class="d-md-none">Quincena 1</span>
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="partialTow-tab" data-toggle="tab" href="#partialTwo" role="tab"
+                        aria-controls="partialTow" aria-selected="false">
+                        <span class="d-none d-md-block">Segunda Quincena</span>
+                        <span class="d-md-none">Quincena 2</span>
+                    </a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="month-tab" data-toggle="tab" href="#month" role="tab" aria-controls="month"
+                        aria-selected="false">Mes</a>
+                </li>
+            </ul>
+            <div class="tab-content nav-tab-h" id="myTabContent">
+                <div class="tab-pane fade show active" id="week" role="tabpanel" aria-labelledby="week-tab">
+                    <div class="table-responsive mt-3 overflow tableFixHead hTableGastos" id="divTable">
+                        {{#if loans}}
+                        <table class="table table-striped table-hover mb-0" id="products-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center" style="z-index: 100;">No.
+                                    </th>
+                                    <th scope="col" class="text-center">Fecha</th>
+                                    <th scope="col" class="text-center">Hora</th>
+                                    <th scope="col" class="text-center">Registro</th>
+                                    <th scope="col" class="text-center">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tbody>
+                                {{#each loans}}
+                                <tr>
+                                    <td scope="row" class="text-center">{{no}}.</td>
+                                    <td scope="col" class="p-0 py-2 py-md-0 text-center">{{date}}</td>
+                                    <td scope="col" class="text-center">{{time}}</td>
+                                    <td scope="col" class="text-center text-capitalize">{{name}}</td>
+                                    <td scope="col" class="text-center">${{price}}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        {{else}}
+                        <div class="row w-100 h-100 justify-content-center align-content-center m-0">
+                            <div class="col-12 col-md-6 px-md-0">
+                                <div class="alert alert-info py-5 text-center" role="alert">
+                                    <h4 class="alert-heading text-center pb-md-3">¡Aún no tiene Gastos!</h4>
+                                    <p>Al parecer no ha pedido vales esta semana.</p>
+                                </div>
+                            </div>
+                        </div>
+                        {{/if}}
+                    </div>
+                    <div class="row w-100 align-content-center bg-white mb-2" style="position: absolute; bottom: 0px">
+                        <div class="col-12 border-up-red py-1">
+                            <div class="row align-content-center justify-content-center">
+                                <div class="col-6">
+                                    <span class="font-weight-bold d-none d-md-block">Gastos Primera Semana</span>
+                                    <span class="font-weight-bold d-md-none">Gastos Semana 1</span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span class="font-weight-bold">$ {{totalW}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade nav-tab-h" id="partial" role="tabpanel" aria-labelledby="partial-tab">
+                    <div class="table-responsive mt-3 overflow tableFixHead hTableGastos">
+                        {{#if loansPartial}}
+                        <table class="table table-striped table-hover mb-0" id="products-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center" style="z-index: 100;">No.
+                                    </th>
+                                    <th scope="col" class="text-center">Fecha</th>
+                                    <th scope="col" class="text-center">Hora</th>
+                                    <th scope="col" class="text-center">Registro</th>
+                                    <th scope="col" class="text-center">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tbody>
+                                {{#each loansPartial}}
+                                <tr>
+                                    <td scope="row" class="text-center">{{no}}.</td>
+                                    <td scope="col" class="p-0 py-2 py-md-0 text-center">{{date}}</td>
+                                    <td scope="col" class="text-center">{{time}}</td>
+                                    <td scope="col" class="text-center text-capitalize">{{name}}</td>
+                                    <td scope="col" class="text-center">${{price}}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        {{else}}
+                        <div class="row w-100 h-100 justify-content-center align-content-center m-0">
+                            <div class="col-12 col-md-6 px-md-0">
+                                <div class="alert alert-info py-5 text-center" role="alert">
+                                    <h4 class="alert-heading text-center pb-md-3">¡Aún no tiene Gastos!</h4>
+                                    <p>Al parecer no ha pedido vales esta primera quincena.</p>
+                                </div>
+                            </div>
+                        </div>
+                        {{/if}}
+                    </div>
+                    <div class="row w-100 align-content-center bg-white mb-2" style="position: absolute; bottom: 0px">
+                        <div class="col-12 border-up-red py-1">
+                            <div class="row align-content-center justify-content-center">
+                                <div class="col-6">
+                                    <span class="font-weight-bold d-none d-md-block">Gastos Primera Quincena</span>
+                                    <span class="font-weight-bold d-md-none">Gastos Quincena 1</span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span class="font-weight-bold">$ {{totalPO}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade nav-tab-h" id="partialTwo" role="tabpanel" aria-labelledby="partialTwo-tab">
+                    <div class="table-responsive mt-3 overflow tableFixHead hTableGastos">
+                        {{#if loansPartialsTwo}}
+                        <table class="table table-striped table-hover mb-0" id="products-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center" style="z-index: 100;">No.
+                                    </th>
+                                    <th scope="col" class="text-center">Fecha</th>
+                                    <th scope="col" class="text-center">Hora</th>
+                                    <th scope="col" class="text-center">Registro</th>
+                                    <th scope="col" class="text-center">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tbody>
+                                {{#each loansPartialsTwo}}
+                                <tr>
+                                    <td scope="row" class="text-center">{{no}}.</td>
+                                    <td scope="col" class="p-0 py-2 py-md-0 text-center">{{date}}</td>
+                                    <td scope="col" class="text-center">{{time}}</td>
+                                    <td scope="col" class="text-center text-capitalize">{{name}}</td>
+                                    <td scope="col" class="text-center">${{price}}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        {{else}}
+                        <div class="row w-100 h-100 justify-content-center align-content-center m-0">
+                            <div class="col-12 col-md-6 px-md-0">
+                                <div class="alert alert-info py-5 text-center" role="alert">
+                                    <h4 class="alert-heading text-center pb-md-3">¡Aún no tiene Gastos!</h4>
+                                    <p>Al parecer no ha pedido vales esta segunda quincena.</p>
+                                </div>
+                            </div>
+                        </div>
+                        {{/if}}
+                    </div>
+                    <div class="row w-100 align-content-center bg-white mb-2" style="position: absolute; bottom: 0px">
+                        <div class="col-12 border-up-red py-1">
+                            <div class="row align-content-center justify-content-center">
+                                <div class="col-6">
+                                    <span class="font-weight-bold d-none d-md-block">Gastos Segunda Quincena</span>
+                                    <span class="font-weight-bold d-md-none">Gastos Quincena 2</span>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <span class="font-weight-bold">$ {{totalPT}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade nav-tab-h" id="month" role="tabpanel" aria-labelledby="month-tab">
+                    <div class="table-responsive mt-3 overflow tableFixHead hTableGastos" id="divTable">
+                        {{#if loansMonth}}
+                        <table class="table table-striped table-hover mb-0" id="products-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center" style="z-index: 100;">No.
+                                    </th>
+                                    <th scope="col" class="text-center">Fecha</th>
+                                    <th scope="col" class="text-center">Hora</th>
+                                    <th scope="col" class="text-center">Registro</th>
+                                    <th scope="col" class="text-center">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tbody>
+                                {{#each loansMonth}}
+                                <tr>
+                                    <td scope="row" class="text-center">{{no}}.</td>
+                                    <td scope="col" class="p-0 py-2 py-md-0 text-center">{{date}}</td>
+                                    <td scope="col" class="text-center">{{time}}</td>
+                                    <td scope="col" class="text-center text-capitalize">{{name}}</td>
+                                    <td scope="col" class="text-center">${{price}}</td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                        {{else}}
+                        <div class="row w-100 h-100 justify-content-center align-content-center m-0">
+                            <div class="col-12 col-md-6 px-md-0">
+                                <div class="alert alert-info py-5 text-center" role="alert">
+                                    <h4 class="alert-heading text-center pb-md-3">¡Aún no tiene Gastos!</h4>
+                                    <p>Al parecer no ha pedido vales este mes.</p>
+                                </div>
+                            </div>
+                        </div>
+                        {{/if}}
+                    </div>
+                    <div class="row w-100 align-content-center bg-white mb-2" style="position: absolute; bottom: 0px">
+                        <div class="col-12 border-up-red py-1">
+                            <div class="row align-content-center justify-content-center">
+                                <div class="col-6 col-md-6">
+                                    <span class="font-weight-bold">Gastos Mes:</span>
+                                </div>
+                                <div class="col-6 col-md-6 text-right">
+                                    <span class="font-weight-bold">$ {{totalM}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

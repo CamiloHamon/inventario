@@ -1,0 +1,40 @@
+{{>header}}
+{{>header-turno}}
+{{>fecha}}
+<div class="container">
+    <div class="text-center mb-2">
+        <h4 class="red">AGREGAR GASTO</h4>
+    </div>
+    <form action="/turno/gastos/agregar" method="POST">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-11 col-md-10 shadow-lg py-3 rounded">
+                <div class="text-center">
+                    <h5>Información del Gasto</h5>
+                    <hr>
+                </div>
+                <div class="row justify-content-center my-3">
+                    <div class="col-10 col-md-6 form-group">
+                        <label for="exampleInputEmail1">Descripción</label>
+                        <input list="products" name="product" class="custom-select" autocomplete="off"
+                            placeholder="Descripcion del gasto" required>
+                        <datalist id="products">
+                            {{#each products}}
+                            <option value="{{name}}">{{name}}</option>
+                            {{/each}}
+                        </datalist>
+                    </div>
+                </div>
+                <div class="row justify-content-center my-3">
+                    <div class="col-10 col-md-6 form-group">
+                        <label for="exampleInputEmail1">Valor</label>
+                        <input type="number" class="form-control" aria-describedby="basic-addon3"
+                            placeholder="Valor del gasto" name="price" autocomplete="off" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-11 col-md-10 text-right px-0">
+                <button type="submit" class="btn btn-primary mt-3 blockMobile">Agregar Gasto</button>
+            </div>
+        </div>
+    </form>
+</div>

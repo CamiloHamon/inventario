@@ -1,0 +1,73 @@
+{{>header}}
+{{>fecha}}
+<div class="container marginOutTurn">
+    <div class="text-center mb-2">
+        <h4 class="red">EDITAR PRODUCTO</h4>
+    </div>
+    <form action="/inventario/editar/{{product.idProduct}}/producto/menu" method="POST">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-11 col-md-10 shadow-lg py-3 rounded">
+                <div class="text-center">
+                    <h5>Información del Producto: <span class="red">{{product.name}}</span></h5>
+                    <hr>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-7 pr-md-0">
+                        <div class="text-center">
+                            <span class="red f-weight-700 border-bottom">Información de la Carta</span>
+                        </div>
+                        <div class="form-group col-12">
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-md-11">
+                                    <label for="exampleInputPassword1">Código</label>
+                                    <input type="text" class="form-control" placeholder="{{product.idProduct}}"
+                                        disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-12">
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-md-11">
+                                    <label for="exampleInputPassword1">Nombre</label>
+                                    <input type="text" class="form-control" id="" placeholder="{{product.name}}"
+                                        name="name" value="{{product.name}}" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-12">
+                            <div class="row justify-content-center">
+                                <div class="col-12 col-md-11">
+                                    <label for="exampleInputPassword1">Precio</label>
+                                    <input type="number" name="price" class="form-control" value="{{product.price}}"
+                                        placeholder="{{product.price}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-5 col-lg-4">
+                        <div class="bg-red rounded shadow-lg h-100 p-3 mx-3 mx-md-0">
+                            <div class="text-center border-down-red pb-3">
+                                <span class="f-weight-700">Productos Inventario</span>
+                            </div>
+                            <div class="col-12">
+                                <div class="row justify-content-center py-2 border-down-red">
+                                    <div class="col-6 text-center">Producto</div>
+                                    <div class="col-6 text-center">Cantidad</div>
+                                </div>
+                                {{#each productsInv}}
+                                <div class="row justify-content-center py-2">
+                                    <div class="col-6 text-center">{{name}}</div>
+                                    <div class="col-6 text-center">{{amount}}</div>
+                                </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-11 col-md-10 text-right px-0">
+                <button type="submit" class="btn btn-primary mt-3 blockMobile">Editar Producto</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,139 @@
+{{>header}}
+{{>fecha}}
+<div class="container marginOutTurn">
+    <div class="text-center">
+        <h4 class="red">AGREGAR EMPLEADO</h4>
+    </div>
+    <div class="row p-0 m-0 justify-content-center">
+        <div class="col-12 col-md-6 p-0 m-0">
+            {{>message}}
+        </div>
+    </div>
+    <form action="/empleados/agregar" method="POST" enctype="multipart/form-data" id="form">
+        <div class="card border-0 p-0">
+            <div class="card-body p-0">
+                <div class="row justify-content-center align-items-center mx-0">
+                    <div class="col-12 col-md-10 shadow-lg rounded">
+                        <div class="row justify-content-center align-items-center py-3">
+                            <div class="col-12 text-center mb-3">
+                                <h5>Información del Empleado</h5>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="row justify-content-center align-items-center pb-3 mb-3">
+                                    <div class="col-4 col-md-3 text-center">
+                                        <img src="/img/profile.png" alt="profile-default" class="img-fluid" id="imagenPerfil">
+                                        <div id="changeImg"></div>
+                                        <div class="row border rounded-circle bg-red border-red align-items-center w-50px h-50px justify-content-center p-ab-accout"
+                                            title="Agregar imagen de perfil">
+                                            <button  type="button" class="btn b-transparent box-shadow-none" data-toggle="modal" data-target="#imgProfile">
+                                                <i class="fas fa-camera-retro red f-size-20 cursor-pointer" title="Agregar imagen de perfil"></i>
+                                            </button>
+                                        </div>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="imgProfile" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">
+                                                            Agregar Imagen de Perfil
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-10 col-md-8 text-left">
+                                                                <div class="row justify-content-center my-3" id="beforeImgPro">
+                                                                    <div class="imgProfileEmp rounded-circle"
+                                                                        style="width: 200px; height: 200px;">
+                                                                        <img src="/img/transparente.png"
+                                                                            alt="profile-default" class="img-fluid">
+                                                                    </div>
+                                                                </div>
+                                                                <div lang="es" class="custom-file cursor-pointer">
+                                                                    <input type="file"
+                                                                        class="cursor-pointer custom-file-input"
+                                                                        id="customFile" name="img" accept="image/jpeg">
+                                                                    <label class="custom-file-label"
+                                                                        for="validatedCustomFile">Subir
+                                                                        Imagen</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer justify-content-center">
+                                                        <button type="button" class="btn btn-primary blockMobile"
+                                                            data-dismiss="modal" id="save">Guardar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 px-md-0 col-md-9 my-3 shadow ">
+                                        <div class="row justify-content-center align-items-center p-3">
+                                            <div class="col-6 border-right">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Nombre</label>
+                                                    <input type="text" class="form-control" id="nombreEmpleado"
+                                                        aria-describedby="emailHelp" placeholder="Nombre del empleado"
+                                                        name="name" autocomplete="off" autocapitalize="words" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">Cargo</label>
+                                                    <select name="position" class="custom-select" required>
+                                                        <option value="0">-- Seleccione --</option>
+                                                        {{#each position}}
+                                                        <option value="{{idPosition}}">{{name}}</option>
+                                                        {{/each}}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-8">
+                                <div class="col-12 text-center mb-3">
+                                    <h5>Datos de Acceso del Empleado</h5>
+                                    <hr>
+                                </div>
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-md-6 pl-md-0">
+
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Nombre de usuario</label>
+                                            <input type="text" class="form-control" id="usernameEmp"
+                                                aria-describedby="emailHelp" placeholder="Nombre de usuario"
+                                                name="username" autocomplete="off" required>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="col-12 col-md-6 pr-md-0">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">Contraseña</label>
+                                            <input type="password" class="form-control" id="passEmp"
+                                                aria-describedby="emailHelp" placeholder="Contraseña" name="password"
+                                                required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mx-0 justify-content-center mt-3 mb-1">
+                    <div class="col-12 col-md-10 text-right px-0">
+                        <button type="submit" class="btn btn-primary blockMobile" id="btn-submit">Agregar Empleado</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="/js/empleadosAgregar/index.js" type="module"></script>

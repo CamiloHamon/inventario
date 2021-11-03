@@ -1,0 +1,166 @@
+{{>header}}
+{{>fecha}}
+<div class="container">
+    <div class="text-center mb-3 marginOutTurn">
+        <h4 class="red">MI CUENTA</h4>
+    </div>
+    <div class="row p-0 m-0 justify-content-center">
+        <div class="col-12 col-md-6 p-0 m-0">
+            {{>message}}
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-11 col-md-6 my-auto shadow-lg rounded">
+            <div class="row justify-content-center mt-3">
+                <div class="col-5 col-sm-4 col-lg-3 px-0 text-center rounded-circle">
+                    {{#if user.imgProfile}}
+                    <img src="/img/imgProfile/{{user.imgProfile}}" class="img-fluid rounded-circle">
+                    {{else}}
+                    <img src="/img/profile.png" class="img-fluid">
+                    {{/if}}
+                    <div
+                        class="row border rounded-circle bg-red border-red align-items-center w-50px h-50px justify-content-center p-ab-accout">
+                        <div>
+                            <button type="button" class="btn b-transparent box-shadow-none" data-toggle="modal"
+                                data-target="#imgProfile">
+                                <i class="fas fa-camera-retro red f-size-20 cursor-pointer"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="imgProfile" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <form action="/cuenta/actualizar/{{user.idUser}}/img" method="POST"
+                                    enctype="multipart/form-data" id="formImg">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Actualizar Imagen</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row justify-content-center">
+                                            <div class="col-10 col-md-8 text-left">
+                                                <div class="row justify-content-center my-3">
+                                                    <div class="imgProfileEmp rounded-circle"
+                                                        style="width: 200px; height: 200px;">
+                                                        <img src="/img/transparente.png" alt="profile-default"
+                                                            class="img-fluid">
+                                                    </div>
+                                                </div>
+                                                <div lang="es" class="custom-file cursor-pointer">
+                                                    <input type="file" class="cursor-pointer custom-file-input"
+                                                        id="customFile" name="img" accept="image/jpeg" required>
+                                                    <label class="custom-file-label" for="validatedCustomFile">Subir
+                                                        Imagen</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-secondary blockMobile"
+                                            data-dismiss="modal">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary blockMobile"
+                                            id="btn-update">Actualizar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 my-2 text-center">
+                    <span> <strong>{{user.name}} - Admin </strong></span>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10">
+                    <form action="/cuenta/actualizar/{{user.idUser}}/name" method="POST">
+                        <div class="row my-3">
+                            <div class="col-12 col-md-auto text-md-right pr-0 align-self-center">
+                                <label for="exampleInputEmail1" class="mb-0">Nombre:</label>
+                            </div>
+                            <div class="col-7 mt-2 mt-md-0">
+                                <input type="text" class="form-control" placeholder="{{user.name}}"
+                                    value="{{user.name}}" name="name" required>
+                            </div>
+                            <div class="col-5 col-md-1 px-md-0 mt-2 mt-md-0">
+                                <button type="submit" class="btn btn-primary blockMobile">Actualizar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-12 text-center">
+                    <div class="dropdown-divider"></div>
+                    <label for="exampleInputEmail1" class="mb-0">Seguridad</label>
+                    <div class="row justify-content-center">
+                        <form action="/cuenta/actualizar/{{user.idUser}}/password" method="POST">
+                            <div class="col-12 col-md-5 my-3">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary blockMobile" data-toggle="modal"
+                                    data-target="#exampleModalCenter">
+                                    Cambiar Contraseña
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Cambiar Contraseña
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-10 col-md-8 text-left">
+                                                        <form>
+                                                            <div class="form-group">
+                                                                <label for="exampleInputEmail1">Contraseña
+                                                                    Actual</label>
+                                                                <input type="password" class="form-control"
+                                                                    placeholder="Contraseña actual" name="currentPass"
+                                                                    required>
+                                                                <small id="emailHelp" class="form-text text-muted">
+                                                                    Escriba la contraseña que usa actualmente.
+                                                                </small>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label for="exampleInputPassword1">Contraseña
+                                                                    nueva</label>
+                                                                <input type="password" class="form-control"
+                                                                    placeholder="Contraseña nueva" name="password"
+                                                                    required>
+                                                                <small class="form-text text-muted">
+                                                                    Escriba la nueva contraseña.
+                                                                </small>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer justify-content-center">
+                                                <button type="button" class="btn btn-secondary blockMobile"
+                                                    data-dismiss="modal">Cancelar</button>
+                                                <button type="submit"
+                                                    class="btn btn-primary blockMobile">Actualizar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/cuenta/index.js" type="module"></script>

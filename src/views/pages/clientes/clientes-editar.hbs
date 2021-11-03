@@ -1,0 +1,49 @@
+{{>header}}
+{{>fecha}}
+<div class="container marginOutTurn">
+    <div class="text-center">
+        <h4 class="red">EDITAR CLIENTE</h4>
+    </div>
+    <div class="row p-0 m-0 justify-content-center">
+        <div class="col-12 col-md-6 p-0 m-0">
+            {{>message}}
+        </div>
+    </div>
+    <form action="/clientes/{{client.idClient}}/editar" method="POST">
+        <div class="card border-0 p-0">
+            <div class="card-body py-0">
+                <div class="row justify-content-center align-items-center mb-3">
+                    <div class="col-12 col-md-6 px-5 py-3 shadow-lg">
+                        <div class="row">
+                            <div class="col-12 text-center mb-3">
+                                <h5>Editar Información del Cliente: <span class="red text-capitalize">{{client.name}}</span></h5>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Nombre</label>
+                                    <input type="text" class="form-control text-capitalize" id="nombreEmpleado"
+                                        aria-describedby="emailHelp" placeholder="Nombre del cliente" name="name"
+                                        value="{{client.name}}" required>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Complemento</label>
+                                    <input type="text" class="form-control text-capitalize" id="complement"
+                                        aria-describedby="emailHelp" placeholder="Por ejemplo: Motos" name="complement"
+                                        value="{{client.complement}}" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-6 px-0 text-right">
+                        <button type="submit" class="btn btn-primary blockMobile">Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

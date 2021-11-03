@@ -1,0 +1,247 @@
+{{>header}}
+{{>header-turno}}
+{{>fecha}}
+<div class="container">
+    <div class="text-center mb-2">
+        <h4 class="red">TURNOS PAGADOS</h4>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 px-md-0">
+            {{>message}}
+        </div>
+    </div>
+    {{#if pays}}
+    {{#if user.rol}}
+    {{#each pays}}
+    <div class="py-3 mt-md-3 d-md-none mobile-pago shadow-lg rounded mt-3">
+        <div class="row justify-content-center">
+            <div class="col-3 pr-0 align-self-center">
+                {{#if imgProfile}}
+                <img src="/img/imgProfile/{{imgProfile}}" class="img-fluid rounded-circle" alt="">
+                {{else}}
+                <img src="/img/profile.png" class="img-fluid" alt="">
+                {{/if}}
+            </div>
+            <div class="col-7 pr-0">
+                <div class="col-12 px-0">
+                    <p class="d-md-none text-uppercase red font-weight-bold text-center">{{name}} - {{position}}</p>
+                </div>
+                <div class="col-12 col-md-2 px-0 text-center font-italic">
+                    <p class="d-md-none">$ {{price}}</p>
+                </div>
+                <div class="col-12 col-md-3 px-0 text-center">
+                    <span class="d-md-none text-success">PAGADO <i class="fas fa-check-circle text-success"></i></p>
+                </div>
+            </div>
+            <div class="col-10 px-0">
+                <div class="row m-0 justify-content-center">
+                    <div class="col-6 text-center">
+                        <a href="/turno/pago/{{idPayTurn}}/editar" class="white">
+                            <button type="button" class="btn btn-secondary blockMobile">Editar
+                                <i class="fas fa-edit cursor-pointer pl-1"></i>
+                            </button>
+                        </a>
+                    </div>
+                    <div class="col-6 text-center">
+                        <button type="submit" class="btn btn-primary blockMobile" data-toggle="modal"
+                            data-target="#deletePay{{idPayTurn}}">Eliminar
+                            <i class="fas fa-trash pl-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-none d-md-block my-3">
+        <div class="row justify-content-center align-content-center">
+            <div class="col-7">
+                <div class="row align-items-center justify-content-center shadow-lg rounded mobile-pago">
+                    <div class="col-md-2 text-center pr-0 py-2">
+                        {{#if imgProfile}}
+                        <img src="/img/imgProfile/{{imgProfile}}" class="img-fluid rounded-circle" alt="">
+                        {{else}}
+                        <img src="/img/profile.png" class="img-fluid" alt="">
+                        {{/if}}
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <span class="font-weight-bold d-none d-md-block text-uppercase red">{{name}} -
+                            {{position}}</span>
+                    </div>
+                    <div class="col-md-2 text-center px-1">
+                        <span class="font-weight-bold d-none d-md-block">$ {{price}}</span>
+                    </div>
+                    <div class="col-md-2 text-center px-1">
+                        <span class="font-weight-bold d-none d-md-block">
+                            <span class="text-success">PAGADO <i class="fas fa-check-circle text-success"></i></span>
+                        </span>
+                    </div>
+                    <div class="col-md-2 text-center px-1">
+                        <div class="row justify-content-center m-0">
+                            <div class="col-md-6 text-center">
+                                <a href="/turno/pago/{{idPayTurn}}/editar" class="white"><i
+                                        class="fas fa-edit gray cursor-pointer"></i></a>
+                            </div>
+                            <div class="col-6 text-center">
+                                <i class="fas fa-trash red cursor-pointer" data-toggle="modal"
+                                    data-target="#deletePay{{idPayTurn}}"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="deletePay{{idPayTurn}}" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Pago de:
+                        <strong class="text-capitalize">{{name}} - {{position}}</strong>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center justify-content-center">
+                        <p>¿Está seguro de eliminar el pago de <strong>{{name}}</strong> con
+                            valor de: <strong>${{price}}</strong>?</p>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <form action="/turno/pago/{{idPayTurn}}/eliminar" method="POST">
+                        <button type="submit" class="btn btn-primary">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    {{else}}
+    {{#each pays}}
+    <div class="border-down-red py-3 d-md-none mobile-pago">
+        <div class="row justify-content-center">
+            <div class="col-3 pr-0 align-self-center">
+                {{#if imgProfile}}
+                <img src="/img/imgProfile/{{imgProfile}}" class="img-fluid rounded-circle" alt="">
+                {{else}}
+                <img src="/img/profile.png" class="img-fluid" alt="">
+                {{/if}}
+            </div>
+            <div class="col-7 pr-0">
+                <div class="col-12 px-0">
+                    <h5 class="font-weight-bold d-none d-md-block">{{name}} - {{position}}</h5>
+                    <p class="d-md-none text-uppercase">{{name}} - {{position}}</p>
+                </div>
+                <div class="col-12 col-md-2 px-0">
+                    <h5 class="font-weight-bold d-none d-md-block">$ 40.000</h5>
+                    <p class="d-md-none">$ {{price}}</p>
+                </div>
+                <div class="col-12 col-md-3 px-0">
+                    <h5 class="font-weight-bold d-none d-md-block">
+                        <span class="text-success">PAGADO <i class="fas fa-check-circle text-success"></i></span>
+                    </h5>
+                    <span class="d-md-none text-success">PAGADO <i class="fas fa-check-circle text-success"></i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="py-4 d-none d-md-block px-2 mobile-pago my-3">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-md-1 text-center mb-md-0">
+                {{#if imgProfile}}
+                <img src="/img/imgProfile/{{imgProfile}}" class="img-fluid rounded-circle" alt="">
+                {{else}}
+                <img src="/img/profile.png" class="img-fluid" alt="">
+                {{/if}}
+            </div>
+            <div class="col-md-3">
+                <h5 class="font-weight-bold d-none d-md-block text-uppercase">{{name}} - {{position}}</h5>
+            </div>
+            <div class="col-md-2 text-center px-0">
+                <h5 class="font-weight-bold d-none d-md-block">$ {{price}}</h5>
+                <p class="d-md-none">$ {{price}}</p>
+            </div>
+            <div class="col-md-3 text-center px-0">
+                <h5 class="font-weight-bold d-none d-md-block">
+                    <span class="text-success">PAGADO <i class="fas fa-check-circle text-success"></i></span>
+                </h5>
+                <span class="d-md-none text-success">PAGADO <i class="fas fa-check-circle text-success"></i></p>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    {{/if}}
+    {{else}}
+    <div class="row justify-content-center mt-md-3">
+        <div class="col-12 col-md-6 px-md-0">
+            <div class="alert alert-info py-5" role="alert">
+                <h4 class="alert-heading text-center pb-md-3">¡Aún no ha pagado turnos!</h4>
+                <p class="text-justify">En esta parte se mostarán todos los turnos pagados del día. Para poder registrar
+                    un pago, ir al
+                    botón rojo que dice: <strong>Agregar</strong>.</p>
+                <p class="text-justify">Una vez le de click en el botón, lo llevará a la sección de <strong>agregar
+                        pago</strong>.
+                    Allí debe especificar a <strong>quién se le va a pagar</strong> y el <strong>valor del pago
+                    </strong>.
+                </p>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    {{#if disable}}
+    <div class="container bg-white sticky-inventario" style="height: 90px;">
+        <div class="row h-100 w-100 align-content-center">
+            <div class="col-12 mb-2 px-0 px-auto">
+                <div class="text-right">
+                    <button type="button" class="btn btn-primary blockMobile" disabled>
+                        Agregar Pago
+                    </button>
+                </div>
+            </div>
+            <div class="col-12 border-up-red py-1">
+                <div class="row w-100 w-100 align-content-center justify-content-center">
+                    <div class="col-6 col-md-3">
+                        <h5 class="font-weight-bold d-none d-md-block">Total Pagos:</h5>
+                        <span class="font-weight-bold d-md-none">Total Pagos:</span>
+                    </div>
+                    <div class="col-6 col-md-9 text-right">
+                        <h5 class="font-weight-bold d-none d-md-block">$ {{totalP}}</h5>
+                        <span class="font-weight-bold d-md-none">$ {{totalP}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="container bg-white sticky-inventario" style="height: 90px;">
+        <div class="row h-100 w-100 align-content-center">
+            <div class="col-12 mb-2 px-0 px-auto">
+                <div class="text-right">
+                    <a href="/turno/pago/agregar" class="white">
+                        <button type="button" class="btn btn-primary blockMobile">
+                            Agregar Pago
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 border-up-red py-1">
+                <div class="row w-100 w-100 align-content-center justify-content-center">
+                    <div class="col-6 col-md-3">
+                        <h5 class="font-weight-bold d-none d-md-block">Total Pagos:</h5>
+                        <span class="font-weight-bold d-md-none">Total Pagos:</span>
+                    </div>
+                    <div class="col-6 col-md-9 text-right">
+                        <h5 class="font-weight-bold d-none d-md-block">$ {{totalP}}</h5>
+                        <span class="font-weight-bold d-md-none">$ {{totalP}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+
+</div>

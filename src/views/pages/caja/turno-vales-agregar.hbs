@@ -1,0 +1,40 @@
+{{>header}}
+{{>header-turno}}
+{{>fecha}}
+<div class="container">
+    <div class="text-center mb-2">
+        <h4 class="red">AGREGAR VALE</h4>
+    </div>
+    <form action="/turno/vales/agregar" method="POST">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-11 col-md-10 shadow-lg py-3 rounded">
+                <div class="text-center">
+                    <h5>Información del Vale</h5>
+                    <hr>
+                </div>
+                <div class="row justify-content-center my-3">
+                    <div class="col-10 col-md-6 form-group">
+                        <label for="exampleInputEmail1">¿A quién se le va a hacer el vale?</label>
+                        <select name="user" class="custom-select" required>
+                            <option value="">-- Seleccione --</option>
+                            {{#each empl}}
+                            <option value="{{idUser}}">{{name}} - {{position}}</option>
+                            {{/each}}
+                        </select>
+                        <small id="emailHelp" class="form-text text-muted">Seleccione a la persona que se le hará el vale.</small>
+                    </div>
+                </div>
+                <div class="row justify-content-center my-3">
+                    <div class="col-10 col-md-6 form-group">
+                        <label for="exampleInputEmail1">Valor</label>
+                        <input type="number" class="form-control" aria-describedby="basic-addon3"
+                            placeholder="Valor del vale" name="price" autocomplete="off" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-11 col-md-10 text-right px-0">
+                <button type="submit" class="btn btn-primary mt-3 blockMobile">Agregar Vale</button>
+            </div>
+        </div>
+    </form>
+</div>

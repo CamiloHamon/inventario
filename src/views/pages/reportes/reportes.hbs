@@ -1,0 +1,63 @@
+{{>header}}
+{{>fecha}}
+
+<div class="container marginOutTurn">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 px-0">
+            {{>message}}
+        </div>
+    </div>
+    <div class="text-center">
+        <h4 class="red">GENERAR REPORTE</h4>
+    </div>
+
+    <div class="row justify-content-center align-items-center">
+        <div class="col-11 col-md-10">
+            <div
+                class="row mt-3 border-red pb-3 justify-content-center p-3 p-md-5 justify-content-md-between shadow-lg rounded">
+                <div class="col-12 text-center">
+                    <h5 class="mb-0 py-3">Genere el reporte de acuerdo a sus necesidades</h5>
+                    <hr>
+                </div>
+                <form class="col-12 col-md-6" action="/generarReporte" method="POST">
+                    <div class="col-12">
+                        <input type="radio" required name="type" value="1" class="form-check-input" id="date">
+                        <label class="form-check-label" for="date">Fecha</label>
+                        <div class="mt-md-3">
+                            <p class="m-0">Día</p>
+                            <input class="d-block custom-select" type="date" name="period" required>
+                        </div>
+                    </div>
+                    <div class="text-right mt-5 col-12">
+                        <button type="submit" class="btn btn-primary blockMobile">
+                            Crear Reporte
+                        </button>
+                    </div>
+                </form>
+                <form class="col-12 col-md-6" action="/generarReporte" method="POST">
+                    <div class="col-12 mt-5 mt-md-0">
+                        <hr class="d-md-none">
+                        <input type="radio" required name="type" value="2" class="form-check-input" id="period">
+                        <label class="form-check-label" for="period">Periodo</label>
+                        <div class="mt-md-3">
+                            <p class="m-0">Seleccione</p>
+                            <select name="period" class="custom-select w-100" required>
+                                <option value="">- Seleccione -</option>
+                                <option value="1">Semanal</option>
+                                <option value="2">Quincenal</option>
+                                <option value="3">Mensual</option>
+                                <option value="4">Semestral</option>
+                                <option value="5">Anual</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="text-right mt-5 col-12">
+                        <button type="submit" class="btn btn-primary blockMobile">
+                            Crear Reporte
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

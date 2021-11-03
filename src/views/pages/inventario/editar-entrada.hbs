@@ -1,0 +1,47 @@
+{{>header}}
+{{>fecha}}
+<div class="container marginOutTurn">
+    <div class="text-center mb-2">
+        <h4 class="red">EDITAR ENTRADA </h4>
+    </div>
+   <form action="/inventario/entradas/{{inProduct.idInputProduct}}/editar" method="POST">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-11 col-md-10 shadow-lg py-3 rounded">
+                <div class="text-center">
+                    <h5>Información de la Entrada: <span class="red">{{inProduct.name}}</span></h5>
+                    <hr>
+                </div>
+                <div class="row justify-content-center align-items-center">
+                    <div class="form-group col-12">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-md-5">
+                                <label for="exampleInputPassword1">Producto</label>
+                                <input type="text" class="form-control" value="{{inProduct.name}}" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-md-5">
+                                <label for="exampleInputPassword1">Precio</label>
+                                <input type="number" class="form-control" value="{{inProduct.price}}"
+                                    name="price" placeholder="{{inProduct.price}}" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-12">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-md-5">
+                                <label for="exampleInputPassword1">Cantidad</label>
+                                <input type="number" class="form-control" id="" value="{{inProduct.amountInput}}" placeholder="{{inProduct.amountInput}}" name="amount" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-11 col-md-10 text-right px-0">
+                <button type="submit" class="btn btn-primary mt-3 blockMobile">Editar Entrada</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,208 @@
+{{>header}}
+{{>fecha}}
+
+<div class="container marginOutTurn">
+    <div class="text-center">
+        <h4 class="red">EDITAR EMPLEADO</h4>
+    </div>
+    <div class="row p-0 m-0 justify-content-center">
+        <div class="col-12 col-md-6 p-0 m-0">
+            {{>message}}
+        </div>
+    </div>
+    <div class="card border-0 p-0">
+        <div class="card-body p-0">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-11 col-md-10 shadow-lg rounded">
+                    <div class="row justify-content-center align-items-center py-3">
+                        <div class="col-12 text-center mb-3">
+                            <h5>Información del Empleado: <span class="red">{{emp.name}}</span></h5>
+                        </div>
+                        <div class="col-12 col-md-7">
+                            <div class="row justify-content-center align-items-center pb-3 border-bottom mb-3">
+                                <div class="col-4 col-md-3 text-center">
+                                    {{#if emp.imgProfile}}
+                                    <img src="/img/imgProfile/{{emp.imgProfile}}" alt="{{emp.name}}"
+                                        class="img-fluid rounded-circle">
+                                    {{else}}
+                                    <img src="/img/profile.png" alt="profile-default" class="img-fluid">
+                                    {{/if}}
+                                    <div class="row border rounded-circle bg-red border-red align-items-center w-50px h-50px justify-content-center p-ab-accout"
+                                        title="Editar imagen de perfil">
+                                        <button class="btn b-transparent rounded-circle box-shadow-none" data-toggle="modal" data-target="#imgProfile">
+                                            <i class="fas fa-camera-retro red f-size-20 cursor-pointer"
+                                                title="Editar imagen de perfil"></i>
+                                        </button>
+                                    </div>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="imgProfile" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <form action="/empleados/editar/{{emp.idUser}}/img" method="POST"
+                                                    enctype="multipart/form-data" id="formImg">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Actualizar
+                                                            Imagen para: <span class="red">{{emp.name}}</span>
+                                                        </h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-10 col-md-8 text-left">
+                                                                <div class="row justify-content-center my-3">
+                                                                    <div class="imgProfileEmp rounded-circle"
+                                                                        style="width: 200px; height: 200px;">
+                                                                        <img src="/img/transparente.png"
+                                                                            alt="profile-default" class="img-fluid">
+                                                                    </div>
+                                                                </div>
+                                                                <div lang="es" class="custom-file cursor-pointer">
+                                                                    <input type="file"
+                                                                        class="cursor-pointer custom-file-input customFile"
+                                                                        id="customFile" name="img" accept="image/jpeg"
+                                                                        required>
+                                                                    <label class="custom-file-label cursor-pointer"
+                                                                        for="validatedCustomFile">Subir
+                                                                        Imagen</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer justify-content-center">
+                                                        <button type="button" class="btn btn-secondary blockMobile"
+                                                            data-dismiss="modal">Cancelar</button>
+                                                        <button type="submit" class="btn btn-primary blockMobile"
+                                                            id="btn-update">Actualizar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-9 px-md-0 col-md-9 my-3 shadow py-3">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col-6 text-center border-right">
+                                            <span class="h6">Nombre:</span> <span class="red">{{emp.name}}</span>
+                                        </div>
+                                        <div class="col-6 text-center">
+                                            <span class="h6">Cargo:</span> <span class="red">{{emp.namePosition}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center w-100">
+                                    <div class="col-9 col-md-12 text-right px-0">
+                                        <button type="button" class="btn btn-primary blockMobile" data-toggle="modal"
+                                            data-target="#infoEmpl">Editar Datos</button>
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                                <div class="modal fade" id="infoEmpl" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLongTitle">Actualizar Datos de:
+                                                    <span class="red">{{emp.name}}</span>
+                                                </h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-7 border-bottom text-center mb-3">
+                                                        <span class="red f-weight-500" style="font-size: 18px;">Datos
+                                                            del
+                                                            Empleado</span class="h6">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <form action="/empleados/editar/{{emp.idUser}}/name"
+                                                            method="POST">
+                                                            <div class="form-group">
+                                                                <label for="exampleInputEmail1">Nombre</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="nombreEmpleado" aria-describedby="emailHelp"
+                                                                    placeholder="{{emp.name}}" name="name"
+                                                                    value="{{emp.name}}" required>
+                                                            </div>
+                                                            <div class="text-right">
+                                                                <button type="submit"
+                                                                    class="btn btn-primary blockMobile">Actualizar</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <form action="/empleados/editar/{{emp.idUser}}/position"
+                                                            method="POST">
+                                                            <div class="form-group">
+                                                                <label for="exampleInputPassword1">Cargo</label>
+                                                                <select class="custom-select" name="position" required>
+                                                                    <option value="{{emp.idPosition}}">
+                                                                        {{emp.namePosition}}
+                                                                    </option>
+                                                                    {{#each position}}
+                                                                    <option value="{{idPosition}}">{{name}}</option>
+                                                                    {{/each}}
+                                                                </select>
+                                                            </div>
+                                                            <div class="text-right">
+                                                                <button type="submit"
+                                                                    class="btn btn-primary blockMobile">Actualizar</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-7">
+                            <div class="col-12 text-center mb-3">
+                                <h5>Datos de Acceso del Empleado: <span class="red">{{emp.name}}</span></h5>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-9 col-md-6 px-0 pl-md-0 pr-md-2 mb-3">
+                                    <form action="/empleados/editar/{{emp.idUser}}/username" method="POST">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Nombre de usuario</label>
+                                            <input type="text" class="form-control" id="usernameEmp"
+                                                aria-describedby="emailHelp" placeholder="{{emp.username}}"
+                                                value="{{emp.username}}" name="username" required>
+                                        </div>
+                                        <div class="text-right">
+                                            <button type="submit"
+                                                class="btn btn-primary blockMobile">Actualizar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-9 col-md-6 px-0 pl-md-2">
+                                    <form action="/empleados/editar/{{emp.idUser}}/password" method="POST">
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">Contraseña</label>
+                                            <input type="password" class="form-control" id="passEmp"
+                                                aria-describedby="emailHelp" placeholder="Contraseña nueva"
+                                                name="password" required>
+                                        </div>
+                                        <div class="text-right">
+                                            <button type="submit"
+                                                class="btn btn-primary blockMobile">Actualizar</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/imgPreview/index.js" type="module"></script>

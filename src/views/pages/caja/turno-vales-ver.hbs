@@ -1,0 +1,140 @@
+{{>header}}
+{{>header-turno}}
+{{>fecha}}
+<div class="container">
+    <div class="text-center mb-2">
+        <h4 class="red">VALES DE: <span>{{userLoan.name}}</span></h4>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 px-0">
+            {{>message}}
+        </div>
+    </div>
+    {{#if loans}}
+    <div class="table-responsive overflow tableTurno">
+        <table class="table table-striped table-hover mb-0">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">No.</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Hora</th>
+                    <th scope="col" class="text-center">Registro</th>
+                    <th scope="col" class="text-center">Valor</th>
+                    {{#if user.rol}}
+                    <th scope="col" class="text-center">Acciones</th>
+                    {{/if}}
+                </tr>
+            </thead>
+            <tbody>
+                {{#if user.rol}}
+                {{#each loans}}
+                <tr>
+                    <td scope="row" class="text-center">{{no}}.</td>
+                    <td scope="row" class="p-0 justify-content-center align-content-center">{{date}}</td>
+                    <td scope="row" class="p-0 justify-content-center align-content-center">{{time}}</td>
+                    <td scope="col" class="text-center p-0 justify-content-center align-content-center">{{registro}}
+                    </td>
+                    <td scope="col" class="text-center p-0 justify-content-center align-content-center">${{price}}</td>
+                    <td scope="col" class="text-center">
+                        <div class="row justify-content-center m-0">
+                            <div class="col-5 col-md-3 px-0 text-center">
+                                <a href="/turno/vales/{{idLoans}}/editar" class="white">
+                                <button class="btn b-transparent">
+                                    <i class="fas fa-edit gray cursor-pointer"></i>
+                                </button>
+                                </a>
+                            </div>
+                            <div class="col-5 col-md-3 px-0 text-center">
+                                <button class="btn b-transparent" data-toggle="modal" data-target="#deleteLoan{{idLoans}}">
+                                    <i class="fas fa-trash red cursor-pointer"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <!-- Modal -->
+                <div class="modal fade" id="deleteLoan{{idLoans}}" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Vale:
+                                    <strong class="text-capitalize">{{name}}</strong>
+                                </h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center justify-content-center">
+                                    <p>¿Está seguro de eliminar el vale de <strong>{{name}}</strong> con
+                                        valor de: <strong>${{price}}</strong>?</p>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <form action="/turno/vales/{{idLoans}}/eliminar" method="POST">
+                                    <button type="submit" class="btn btn-primary">Eliminar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+                {{else}}
+                {{#each loans}}
+                <tr>
+                    <td scope="row" class="text-center">{{no}}.</td>
+                    <td scope="row" class="p-0">{{date}}</td>
+                    <td scope="row" class="p-0">{{time}}</td>
+                    <td scope="row" class="p-0 text-center">{{registro}}</td>
+                    <td scope="col" class="text-center p-0 justify-content-center align-content-center">${{price}}</td>
+                </tr>
+                {{/each}}
+                {{/if}}
+            </tbody>
+        </table>
+    </div>
+    {{else}}
+    <div class="row justify-content-center mt-md-3">
+        <div class="col-12 col-md-6 px-md-0">
+            <div class="alert alert-info py-5" role="alert">
+                <h4 class="alert-heading text-center pb-md-3">¡Aún no tiene Vales!</h4>
+                <p class="text-justify">En esta parte se mostarán todos los vales registrados del día. Para poder
+                    registrar un vale, ir al
+                    botón rojo que dice: <strong>Agregar</strong>.</p>
+                <p class="text-justify">Una vez le de click en el botón, lo llevará a la sección de <strong>agregar un
+                        vale</strong>.
+                    Allí debe especificar a <strong>quién se le va a realizar el vale</strong> y el <strong>valor del
+                        vale </strong>.
+                </p>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    <div class="container bg-white sticky-inventario" style="height: 90px;">
+        <div class="row h-100 w-100 align-content-center">
+            <div class="col-12 mb-2 px-0 px-auto">
+                <div class="text-right">
+                    <a href="/turno/vales/agregar" class="white">
+                        <button type="button" class="btn btn-primary blockMobile">
+                            Agregar Vale
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <div class="col-12 border-up-red py-1">
+                <div class="row w-100 w-100 align-content-center justify-content-center">
+                    <div class="col-6 col-md-3">
+                        <h5 class="font-weight-bold d-none d-md-block">Total Vales:</h5>
+                        <span class="font-weight-bold d-md-none">Total Vales:</span>
+                    </div>
+                    <div class="col-6 col-md-9 text-right">
+                        <h5 class="font-weight-bold d-none d-md-block">$ {{totalV}}</h5>
+                        <span class="font-weight-bold d-md-none">$ {{totalV}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

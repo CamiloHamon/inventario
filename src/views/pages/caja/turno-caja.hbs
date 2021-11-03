@@ -1,0 +1,184 @@
+{{>header}}
+{{>header-turno}}
+{{>fecha}}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6">
+            {{>message}}
+        </div>
+    </div>
+    <div class="row h-71">
+        <div class="col-12 col-md-12 col-lg-4 order-12 order-lg-1 mt-md-3 mt-lg-0 h-100">
+            <div class="bg-white sticky-top z-index-custom">
+                <div class="input-group border-red border-down-none rounded-top">
+                    <input type="text" class="form-control border-0 focus-custom" placeholder="Buscar producto..."
+                        id="search-products">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text border-0 border-red-right-1px cursor-pointer bg-white"
+                            id="search-button">
+                            <i class="fas fa-search red"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive overflow tableCaja rounded-bottom border-red" id="divTable">
+                <table class="table table-bordered m-0 sinBorde table-hover" id="products-table">
+                    <thead>
+                        <tr>
+                            <th scope="col-1" class="text-center">Cód.</th>
+                            <th scope="col-9" class="text-center">Nombre del Producto</th>
+                            <th scope="col-2" class="text-center borderRight">Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center">
+                <p id="product-not-found"></p>
+            </div>
+        </div>
+        <template id="products-template">
+            <tr>
+                <th scope="row" class="cod text-center"></th>
+                <td class="name"></td>
+                <td class="price text-right"></td>
+            </tr>
+        </template>
+        <div class="col-12 col-md-6 col-lg-4 order-3 mb-3 mb-md-0 h-100">
+            <div class="border-red rounded h-100">
+                <div class="py-1 text-center sticky-top z-index-custom bg-white border-down-red">
+                    <span class="font-weight-bold">ORDEN</span>
+                </div>
+                <div class="table-responsive overflow tableCaja rounded overMobile h-table-orden">
+                    <table class="table sinBorde table-hover m-0" id="orden-table">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Nombre del producto</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="last text-center"><i class="fas fa-trash red"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="py-1 text-center z-index-custom bg-white border-up-red border-down-red subtotal borderMobileSubtotal">
+                    <div class="row mx-0 h-100 align-content-center">
+                        <div class="col-3 red font-weight-bold">Subtotal:</div>
+                        <div class="col-9 text-right red font-weight-bold">$ <span id="total">0</span></div>
+                    </div>
+                </div>
+            </div>
+            <template id="orden-template">
+                <tr>
+                    <td scope="row" class="name text-center px-1 font-weight-normal"></td>
+                    <td class="amount text-center"></td>
+                    <td class="last text-center">
+                        <button type="button" class="act close closeRegister out-line">
+                            &times;
+                        </button>
+                    </td>
+                </tr>
+            </template>
+
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 text-center order-1 order-md-1 mb-3 order-lg-2 mb-md-0" id="column-3">
+            <div id="container-caja">
+                <div class="alerts"></div>
+                <div id="logoCaja">
+                    <img class="img-caja" src="/img/logo.png" alt="Logo">
+                </div>
+                <form id="cajaRegistradora">
+                    <div class="col-12 bg-secondary mt-1 p-3 border-secondary rounded divBillete">
+                        <input type="text" class="form-control text-right" id="register" autocomplete="off">
+                    </div>
+                    <div class="row mx-0 mt-3">
+                        <div class="col-8 px-0">
+                            <div class="row mx-0">
+                                <div class="col-4 pl-0">
+                                    <button type="button" class="btn btn-outline-primary btn-lg w-100 btn-caja"
+                                        id="btn-7">7</button>
+                                </div>
+                                <div class="col-4 pl-0">
+                                    <button type="button" class="btn btn-outline-primary btn-lg w-100 btn-caja"
+                                        id="btn-8">8</button>
+                                </div>
+                                <div class="col-4 pl-0">
+                                    <button type="button" class="btn btn-outline-primary btn-lg w-100 btn-caja"
+                                        id="btn-9">9</button>
+                                </div>
+                            </div>
+                            <div class="row mx-0 mt-3">
+                                <div class="col-4 pl-0">
+                                    <button type="button" class="btn btn-outline-primary btn-lg w-100 btn-caja"
+                                        id="btn-4">4</button>
+                                </div>
+                                <div class="col-4 pl-0">
+                                    <button type="button" class="btn btn-outline-primary btn-lg w-100 btn-caja"
+                                        id="btn-5">5</button>
+                                </div>
+                                <div class="col-4 pl-0">
+                                    <button type="button" class="btn btn-outline-primary btn-lg w-100 btn-caja"
+                                        id="btn-6">6</button>
+                                </div>
+                            </div>
+                            <div class="row mx-0 mt-3">
+                                <div class="col-4 pl-0">
+                                    <button type="button" class="btn btn-outline-primary btn-lg w-100 btn-caja"
+                                        id="btn-1">1</button>
+                                </div>
+                                <div class="col-4 pl-0">
+                                    <button type="button" class="btn btn-outline-primary btn-lg w-100 btn-caja"
+                                        id="btn-2">2</button>
+                                </div>
+                                <div class="col-4 pl-0">
+                                    <button type="button" class="btn btn-outline-primary btn-lg w-100 btn-caja"
+                                        id="btn-3">3</button>
+                                </div>
+                            </div>
+                            <div class="row mx-0 mt-3">
+                                <div class="col-8 pl-0">
+                                    <button type="button" class="btn btn-outline-primary btn-lg w-100 btn-caja"
+                                        id="btn-0">0</button>
+                                </div>
+                                <div class="col-4 pl-0">
+                                    <button type="button" class="btn btn-outline-primary btn-lg w-100"
+                                        id="multiply">*</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 px-0">
+                            <button type="button" class="btn btn-outline-warning btn-lg w-100" id="delete"><i
+                                    class="fas fa-backspace"></i></button>
+                            <button type="submit" class="btn btn-outline-success btn-lg w-100 mt-3"
+                                id="plu">PLU</button>
+                            <button type="button" class="btn btn-outline-info btn-lg w-100 mt-3 h-47"
+                                id="registrar">CAJA</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="d-flex justify-content-between input-group my-2 border-0">
+                    <div class="input-group-prepend d-flex justify-content-between border rounded p-1 px-3 cursor-pointer w-45-p"
+                        id="divCheckObs" title="Observaciones">
+                        <div class="input-group-text border-0 m-0 p-0 pr-1 bg-white">
+                            <input type="checkbox" aria-label="Checkbox for following text input" id="checkObs"
+                                disabled>
+                        </div>
+                        <span class="input-group-text border-0 my-0 p-0 px-1 text-muted bg-white">Observaciones</span>
+                    </div>
+                    <div class="input-group-prepend d-flex justify-content-between border rounded p-1 px-3 cursor-pointer w-45-p"
+                        id="divCheckFiado" title="Orden fiada">
+                        <span class="input-group-text border-0 p-0 px-1 text-muted bg-white">Orden Fiada</span>
+                        <div class="input-group-text border-0 p-0 pl-1 bg-white">
+                            <input type="checkbox" aria-label="Checkbox for following text input" id="checkFiado"
+                                disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/caja/index.js" type="module"></script>

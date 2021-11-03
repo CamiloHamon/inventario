@@ -1,0 +1,57 @@
+{{>header}}
+{{>fecha}}
+<div class="container">
+    <div class="text-center">
+        <h3 class="pb-3 d-none d-md-block">EDITAR FIADO</h3>
+        <h4 class="pb-3 d-md-none">EDITAR FIADO</h4>
+    </div>
+
+    <div class="table-responsive mt-3">
+        <form action="">
+            <table class="table table-striped border-up-red table-hover">
+                <thead>
+                    <tr>
+                        <th scope="row" class="text-center p-0">
+                            <span class="d-none d-md-block">Cliente</span>
+                            <span class="d-block d-md-none">Cli.</span>
+                        </th>
+                        <th scope="col">
+                            <span class="d-none d-md-block">Producto</span>
+                            <span class="d-block d-md-none">Prod.</span>
+                        </th>
+                        <th scope="col" class="text-center">
+                            <span class="d-none d-md-block">Cantidad</span>
+                            <span class="d-block d-md-none">Cant.</span>
+                        </th>
+                        <th scope="col" class="text-center">
+                            Total
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row" class="text-center p-0">
+                            01
+                        </th>
+                        <td scope="col" class="py-2 py-md-0">Pollo Asado</td>
+                        <td scope="col" class="text-center w-custom-100">
+                            <input type="text" class="form-control h-30px w-45 p-0 p-md-2 text-right"
+                                aria-label="Text input with dropdown button">
+                        </td>
+                        <td scope="col" class="text-center">
+                            <span>$51.0000</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-right">
+                <div class="text-right d-none d-md-block">
+                    <button type="submit" class="btn btn-primary mt-3">Actualizar</button>
+                </div>
+                <div class="text-right d-md-none">
+                    <button type="submit" class="btn btn-primary mt-3 btn-sm">Actualizar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

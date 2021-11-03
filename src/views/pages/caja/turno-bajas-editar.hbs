@@ -1,0 +1,48 @@
+{{>header}}
+{{>header-turno}}
+{{>fecha}}
+<div class="container">
+    <div class="text-center mb-2">
+        <h4 class="red">EDITAR BAJA</h4>
+    </div>
+    <form action="/turno/bajas/{{discharged.idDischarged}}/editar" method="POST">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-11 col-md-10 shadow-lg py-3 rounded">
+                <div class="text-center">
+                    <h5>Información de la Baja: <span class="red text-capitalize d-block mt-2">
+                        {{discharged.name}} - {{discharged.descripcion}}</span> </h5>
+                    <hr>
+                </div>
+                <div class="row justify-content-center my-3">
+                    <div class="col-10 col-md-6 form-group order-12 order-md-1">
+                        <label for="exampleInputEmail1">Producto</label>
+                        <select class="custom-select" disabled>
+                            <option value="" selected>[{{discharged.fk_idProduct}}] {{discharged.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row justify-content-center my-3">
+                    <div class="col-10 col-md-3 form-group">
+                        <label for="exampleInputEmail1">Observación</label>
+                        <input list="products" name="observation" class="custom-select text-uppercase"
+                            value="{{discharged.descripcion}}" autocomplete="off"
+                            placeholder="{{discharged.descripcion}}" required>
+                        <datalist id="products">
+                            {{#each obs}}
+                            <option value="{{name}}">{{name}}</option>
+                            {{/each}}
+                        </datalist>
+                    </div>
+                    <div class="col-10 col-md-3 form-group">
+                        <label for="exampleInputEmail1">Cantidad</label>
+                        <input type="number" class="form-control" aria-describedby="basic-addon3" placeholder="Cantidad"
+                            name="amount" autocomplete="off" value="{{discharged.amount}}" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-11 col-md-10 text-right px-0">
+                <button type="submit" class="btn btn-primary mt-3 blockMobile">Editar Baja</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,71 @@
+{{>header}}
+{{>header-turno}}
+{{>fecha}}
+<div class="container">
+    <div class="text-center mb-2">
+        <h4 class="red">AGREGAR PAGO</h4>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 px-md-0" id="afterAlerts"></div>
+    </div>
+
+    <div id="container" class="shadow-lg rounded">
+        <form action="/turno/pago/agregar" method="POST" id="formPay">
+            <div class="row justify-content-center">
+                <div class="text-center mt-2 col-10">
+                    <h5>Información del Pago</h5>
+                    <hr>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="row justify-content-center" id="slDiv">
+                        <div class="col-10 col-md-6 form-group mb-0">
+                            <label for="exampleInputEmail1">Empleado</label>
+                            <select name="user" class="custom-select" id="slUser" required>
+                                <option value="">-- Seleccione al empleado --</option>
+                                {{#each empl}}
+                                <option value="{{idUser}}">{{name}} - {{positionName}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="col-10 col-md-6 form-group mt-3 mt-md-auto">
+                            <label for="exampleInputEmail1">Valor</label>
+                            <input type="number" class="form-control" aria-describedby="basic-addon3"
+                                placeholder="Valor del pago" name="price" autocomplete="off" required id="inputValue">
+                            <small id="emailHelp" class="form-text text-muted">Cuánto se le va a pagar al
+                                empleado.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10 col-md-12">
+                    <div class="row justify-content-center" id="tableVales">
+                        <div class="col-11 col-md-6 text-center rounded bg-bisque px-0 d-none" id="contentTable">
+                            <div class="py-2">
+                                <span id="titleVales" class="font-weight-bold"></span>
+                            </div>
+                            <table class="table border-up-red table-hover mb-0" id="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="row" class="text-center p-1 font-weight-normal red f-weight-500">Fecha</th>
+                                        <th scope="col" class="p-1 font-weight-normal red f-weight-500">Precio</th>
+                                        <th scope="col" class="p-1 font-weight-normal red f-weight-500 text-center">Saldar</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <div id="totalVales"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center mt-2" id="div-btn-pay">
+                <div class="row col-10 col-md-6 px-0 d-none" id="addPay">
+                    <div class="col-12 text-right px-md-0">
+                        <button type="submit" class="btn btn-primary mb-3 blockMobile" disabled id="btn-pay">Pagar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/pagoTurno/index.js" type="module"></script>

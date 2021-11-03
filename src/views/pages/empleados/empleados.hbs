@@ -1,0 +1,118 @@
+{{>header}}
+{{>fecha}}
+<div class="container marginOutTurn">
+    <div class="text-center mb-3">
+        <h4 class="red">EMPLEADOS</h4>
+    </div>
+    <div class="row p-0 m-0 justify-content-center">
+        <div class="col-12 col-md-6 p-0 m-0">
+            {{>message}}
+        </div>
+    </div>
+    {{#if emp}}
+    {{#each emp}}
+    <div class="row justify-content-center align-items-center">
+        <div class="col-11 col-md-6">
+            <div class="row justify-content-center mb-3 shadow-lg mobile-pago">
+                <div class="col-12 py-2 row  justify-content-center align-items-center">
+                    <div class="col-2 px-0">
+                        {{#if imgProfile}}
+                        <img src="/img/imgProfile/{{imgProfile}}" alt="{{name}}" class="img-fluid rounded-circle">
+                        {{else}}
+                        <img src="/img/profile.png" alt="" class="img-fluid">
+                        {{/if}}
+                    </div>
+                    <div class="col-7 text-center">
+                        <span class="text-uppercase font-weight-bold font-sm">{{name}} - {{positionName}}</span>
+                    </div>
+                    <div class="col-3 px-0">
+                        <div class="row justify-content-center m-0">
+                            <div class="col-6 col-md-4 px-0">
+                                <a href="/empleados/editar/{{idUser}}" class="white p-0 m-0">
+                                    <button class="btn b-transparent">
+                                        <i class="fas fa-edit gray cursor-pointer"></i>
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="col-6 col-md-4 px-0">
+                                <button class="btn b-transparent" data-toggle="modal"
+                                    data-target="#deleteUser{{idUser}}">
+                                    <i class="fas fa-trash red cursor-pointer"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="deleteUser{{idUser}}" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar Empleado:
+                                        <strong>{{name}}</strong>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="text-center justify-content-center">
+                                        <p>¿Está seguro de eliminar el empleado <strong>{{name}} -
+                                                {{positionName}}</strong>?</p>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-dismiss="modal">Cancelar</button>
+                                    <form action="/empleados/eliminar/{{idUser}}" method="POST">
+                                        <button type="submit" class="btn btn-primary">Eliminar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+    {{else}}
+    <div class="row justify-content-center mt-md-3">
+        <div class="col-12 col-md-6 px-md-0">
+            <div class="alert alert-info py-5" role="alert">
+                <h4 class="alert-heading text-center pb-md-3">¡Aún no tiene Empleados!</h4>
+                <p class="text-justify">En esta parte se mostarán todos los empleados. Para poder registrar empleado, ir
+                    al
+                    botón rojo que dice: <strong>Agregar</strong>.</p>
+                <p class="text-justify">Una vez le de click en el botón, lo llevará a la sección de <strong>agregar un
+                        empleado</strong>.
+                    Allí debe llenar todos los campos que se le soliciten.
+                </p>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    <div class="sticky-turno-button d-none d-md-block">
+        <div class="text-right">
+            <a href="/empleados/agregar" class="white">
+                <button type="button" class="btn btn-primary">
+                    Agregar
+                </button>
+            </a>
+        </div>
+    </div>
+    <div class="container bg-white sticky-inventario px-0 d-md-none">
+        <div class="row h-100 w-100 align-content-center justify-content-center">
+            <div class="col-12 col-md-6">
+                <div class="text-center ">
+                    <a href="/empleados/agregar" class="white">
+                        <button type="button" class="btn btn-primary d-md-none blockMobile">
+                            Agregar Empleado
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

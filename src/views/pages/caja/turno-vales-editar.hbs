@@ -1,0 +1,35 @@
+{{>header}}
+{{>header-turno}}
+{{>fecha}}
+<div class="container">
+    <div class="text-center mb-2">
+        <h4 class="red">EDITAR VALE</h4>
+    </div>
+    <form action="/turno/vales/{{loan.idLoans}}/editar" method="POST">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-11 col-md-10 shadow-lg py-3 rounded">
+                <div class="text-center">
+                    <h5>Información del Vale: <span class="red">{{empl.name}}</span></h5>
+                    <hr>
+                </div>
+                <div class="row justify-content-center my-3">
+                    <div class="col-10 col-md-6 form-group">
+                        <label for="exampleInputEmail1">Se le hizo vale a:</label>
+                        <input type="text" class="form-control" aria-describedby="basic-addon3"
+                            value="{{empl.name}} - {{empl.position}}" disabled>
+                    </div>
+                </div>
+                <div class="row justify-content-center my-3">
+                    <div class="col-10 col-md-6 form-group">
+                        <label for="exampleInputEmail1">Valor</label>
+                        <input type="number" class="form-control" aria-describedby="basic-addon3" value="{{loan.price}}"
+                            placeholder="Valor del vale" name="price" autocomplete="off" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-11 col-md-10 text-right px-0">
+                <button type="submit" class="btn btn-primary mt-3 blockMobile">Editar Vale</button>
+            </div>
+        </div>
+    </form>
+</div>

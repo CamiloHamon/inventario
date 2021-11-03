@@ -1,0 +1,105 @@
+{{>header}}
+{{>header-turno}}
+{{>fecha}}
+<div class="container">
+    <div class="text-center mb-2">
+        <h4 class="red">EDITAR PAGO</h4>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 text-center" id="alerts"></div>
+    </div>
+    <form id="form">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-11 col-md-10 shadow-lg py-3 rounded">
+                <div class="text-center">
+                    <h5>Información del Pago: <span class="red d-block d-md-auto mt-2">{{empl.name}} - {{empl.position}}</span></h5>
+                    <hr>
+                </div>
+                <div class="row justify-content-center my-3">
+                    <div class="col-11 col-md-6 form-group">
+                        <label for="exampleInputEmail1">Valor del Pago</label>
+                        <input type="text" class="form-control" aria-describedby="basic-addon3"
+                            placeholder="Valor del pago" name="price" autocomplete="off" value="{{turn.price}}" required
+                            id="inputValue">
+                        <small id="emailHelp" class="form-text text-muted">Cuánto se le pagó al empleado.</small>
+                    </div>
+                </div>
+                {{#if loans}}
+                <div class="col-12">
+                    <div class="row justify-content-center" id="tableVales">
+                        <div class="col-11 col-md-8 col-lg-6 text-center rounded bg-bisque px-0" id="contentTable">
+                            <div class="py-2">
+                                <span id="titleVales" class="font-weight-bold">Vales Pagados de: <span
+                                        class="red">{{empl.name}}</span></span>
+                            </div>
+                            <table class="table border-up-red table-hover mb-0" id="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="row" class="text-center p-1 font-weight-normal red f-weight-500">
+                                            Fecha</th>
+                                        <th scope="col" class=" p-1 font-weight-normal red f-weight-500">Precio</th>
+                                        <th scope="col" class=" p-1 font-weight-normal red f-weight-500">
+                                            Acciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each loans}}
+                                    <tr>
+                                        <td scope="row">{{date}}</td>
+                                        <td scope="col" class="price">${{price}}</td>
+                                        <td scope="col">
+                                            <button class="btn b-transparent" data-toggle="modal"
+                                                data-target="#deleteLoanPay{{idLoans}}" type="button">
+                                                <i class="fas fa-trash red cursor-pointer" title="Eliminar vale"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="deleteLoanPay{{idLoans}}" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">Eliminar el pago
+                                                        del
+                                                        saldo del vale
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="text-center justify-content-center">
+                                                        <p>¿Está seguro de eliminar el saldo del vale con
+                                                            valor de: <strong>${{price}}</strong>?</p>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer justify-content-center">
+                                                    <button type="button" class="btn btn-secondary blockMobile"
+                                                        data-dismiss="modal">Cancelar</button>
+                                                    <button type="button" class="btn btn-primary delLoan blockMobile"
+                                                        id="deleteLoan-{{idLoans}}"
+                                                        data-idUser="{{idUserLoan}}">Eliminar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                            <div id="totalVales"></div>
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
+            </div>
+            <div class="col-11 col-md-10 text-right px-0">
+                <button type="submit" class="btn btn-primary mt-3 blockMobile">Editar Pago</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/editarPagoTurno/index.js" type="module"></script>

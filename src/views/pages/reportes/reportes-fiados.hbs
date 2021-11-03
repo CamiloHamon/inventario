@@ -1,0 +1,76 @@
+{{>header}}
+{{>fecha}}
+<div class="container marginOutTurn">
+    <div class="text-center">
+        <h4 class="red">FIADOS</h4>
+    </div>
+
+    <div class="table-responsive mt-3 table-hover">
+        <table class="table table-striped border-up-red table-hover">
+            <thead>
+                <tr>
+                    <th scope="row" class="text-center sticky-white"></th>
+                    <th scope="col" class="sticky-f-cli">Cliente</th>
+                    <th scope="col" class="text-center">Producto</th>
+                    <th scope="col" class="text-center">Cant.</th>
+                    <th scope="col" class="text-center">Fecha</th>
+                    <th scope="col" class="text-center">Total</th>
+                    <th scope="col" class="text-center">
+                        <span class="d-none d-md-block">Acciones</span>
+                        <span class="d-block d-md-none">Acc.</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row" class="text-center sticky-prod-inv-act">
+                        <input type="checkbox" name="" id="">
+                    </th>
+                    <td scope="col" class="py-2 py-md-0 text-center text-md-left sticky-f-cli">Brayan - Motos</td>
+                    <td scope="col" class="text-center">Pollo Asado</td>
+                    <td scope="col" class="text-center">3</td>
+                    <td scope="col" class="text-center">15/3/2021</td>
+                    <td scope="col" class="text-center">$51.000</td>
+                    <td scope="col" class="text-center p-md-1 px-0">
+                        <div class="row justify-content-center m-0">
+                            <div class="col-6 col-md-3 px-0">
+                                <a href="/reportes/fiados/editar" class="white">
+                                    <i class="fas fa-edit gray cursor-pointer"></i>
+                                </a>
+                            </div>
+                            <div class="col-6 col-md-3 px-0">
+                                <i class="fas fa-trash-alt red cursor-pointer"></i>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="sticky-turno-button">
+        <form action="">
+            <div class="text-right d-md-none">
+                <button type="submit" class="btn btn-primary btn-sm d-md-none">
+                   Saldar
+                </button>
+            </div>
+            <div class="text-right d-none d-md-block">
+                <button type="submit" class="btn btn-primary">
+                    Saldar
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="row border-up-red sticky-turno-total bg-white mt-md-3 align-content-center">
+        <div class="col-6 col-md-3">
+            <h5 class="font-weight-bold d-none d-md-block">Total Fiados:</h5>
+            <span class="font-weight-bold d-md-none">Total Fiados:</span>
+        </div>
+        <div class="col-6 col-md-9 text-right">
+            <h5 class="font-weight-bold d-none d-md-block">$ 51.000</h5>
+            <span class="font-weight-bold d-md-none">$ 51.000</span>
+        </div>
+    </div>
+</div>
