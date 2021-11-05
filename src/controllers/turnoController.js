@@ -3,6 +3,8 @@ const turnoModel = require('../models/turnoModel');
 const cashBoxModel = require('../models/cashBoxModel');
 const flMessage = require('../helpers/flash');
 const endTurn = require('../helpers/endTurn');
+require('dotenv').config();
+
 const turnController = {};
 
 turnController.turn = (req, res, next) => {
@@ -31,6 +33,19 @@ turnController.turnForm = async (req, res, next) => {
 			}
 		}
 	} else {
+		if(req.user.rol !== 1){
+			const accountSid = process.env.ACCOUNT_SID; 
+			const authToken = process.env.AUTH_TOKEN; 
+			const client = require('twilio')(accountSid, authToken);
+			client.messages 
+				.create({ 
+					body: `El empleado *${req.user.name}* ha iniciado turno.`, 
+					from: 'whatsapp:+14155238886',       
+					to: 'whatsapp:+573232390842' 
+				}) 
+				.then(message => console.log(message.sid)) 
+				.done();
+		}
 		turn = await insertTurn(idUser);
 	}
 
@@ -61,6 +76,20 @@ turnController.terminar = async (req, res, next) => {
 	}
 
 	const end = await endTurn.end(id);
+
+	if(req.user.rol !== 1){
+		const accountSid = process.env.ACCOUNT_SID; 
+		const authToken = process.env.AUTH_TOKEN; 
+		const client = require('twilio')(accountSid, authToken);
+		client.messages 
+			.create({ 
+				body: `El empleado *${req.user.name}* ha terninado turno.`, 
+				from: 'whatsapp:+14155238886',       
+				to: 'whatsapp:+573232390842' 
+			}) 
+			.then(message => console.log(message.sid)) 
+			.done();
+	}
 
 	end ? req.flash('info', info) : req.flash('error', error);
 

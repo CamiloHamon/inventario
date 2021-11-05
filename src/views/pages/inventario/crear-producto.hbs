@@ -4,7 +4,7 @@
     <div class="text-center mb-2">
         <h4 class="red">CREAR PRODUCTO</h4>
     </div>
-    <div class="row p-0 m-0 justify-content-center" id="alertas">
+    <div class="row p-0 m-0 justify-content-center flex-column align-items-center" id="alertas">
         <div class="col-12 col-md-6 p-0 m-0">
             {{>message}}
         </div>
@@ -51,6 +51,7 @@
                                         Inventario
                                     </div>
                                 </div>
+                                
                                 <div class="col-12 col-sm-6 col-md-6 mt-4 m-sm-0">
                                     <label for="exampleInputPassword1">¿Hace parte de la carta?</label>
                                     <div class="input-group-prepend d-inline-flex form-control rounded p-1 px-3 cursor-pointer w-100 user-select-none"
@@ -79,6 +80,12 @@
                                         placeholder="Precio del producto" name="price" autocomplete="off">
                                     <small id="emailHelp" class="form-text text-muted">Precio que se verá en la carta
                                         (mayor a $ 499).</small>
+                                </div>
+                                <div class="col-12 complements order-3 mt-3" id="minAmount">
+                                    <label for="exampleInputPassword1">Notificar cuando haya igual o menor a:</label>
+                                    <input type="number" class="form-control col-12 col-md-4 pr-0" id="minAmountInput"
+                                        placeholder="Cantidad mínima de producto" name="minAmount" autocomplete="off">
+                                    <small id="emailHelp" class="form-text text-muted">La cantidad mínima para que se le notifique que el producto está por acabarse.</small>
                                 </div>
                             </div>
                         </div>

@@ -35,6 +35,7 @@ reportesController.reportToDay = async (req, res, next) => {
             from: `Reporte diario`,
             to: "asaderochispitasybrasitas71@gmail.com",
             subject: `Reporte diario: ${moment.toDay()}`,
+            cc: 'camilohamonserna@gmail.com',
             html: "Este es tu reporte de ventas para el día de hoy:",
             attachments: [
               {
@@ -177,6 +178,7 @@ reportesController.generateReport = async (req, res, next) => {
             from: `Reporte ${type} - ${dateFirst} - ${dateLast}`,
             to: "asaderochispitasybrasitas71@gmail.com",
             subject: `Reporte ${type} - ${dateFirst} - ${dateLast}`,
+            cc:'camilohamonserna@gmail.com',
             html: `Este es tu reporte de ventas con periodo ${type} - ${dateFirst} - ${dateLast}`,
             attachments: [
               {

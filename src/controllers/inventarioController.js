@@ -259,6 +259,7 @@ invController.createProductForm = async (req, res, next) => {
 	if (valName) {
 		let insertId = await newId(codigo),
 			insertInv = null,
+			insertMinAMount = 0,
 			insertMenu = { menu: 0, precio: 0 },
 			idProdSpecial = 1;
 
@@ -268,9 +269,10 @@ invController.createProductForm = async (req, res, next) => {
 		if (checkInv || checkCarta) {
 			if (checkInv) {
 				const cantidad = Number(inventario.cantidad);
-
-				if (!isNaN(cantidad) && cantidad > 0) {
+				const minAmount = Number(inventario.minAmount);
+				if (!isNaN(cantidad) && cantidad > 0 && !isNaN(minAmount) && minAmount > 0) {
 					insertInv = cantidad;
+					insertMinAMount = minAmount;
 				}
 			}
 			if (checkCarta) {
@@ -315,6 +317,7 @@ invController.createProductForm = async (req, res, next) => {
 				insertId,
 				nombreFinally,
 				insertInv,
+				insertMinAMount,
 				insertMenu.menu,
 				idProdSpecial
 			);

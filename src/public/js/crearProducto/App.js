@@ -7,6 +7,7 @@ export async function App() {
 	const d = document;
 	const $contPrecio = d.getElementById('contPrecio'),
 		$contAmount = d.getElementById('contAmount'),
+		$minAmount = d.getElementById('minAmount'),
 		$confirmModal = d.getElementById('confirmModal'),
 		$checkInv = d.getElementById('checkInv'),
 		$checkCarta = d.getElementById('checkCarta'),
@@ -27,6 +28,7 @@ export async function App() {
 		$contentProducts = d.getElementById('overflowProducts');
 
 	$contPrecio.remove();
+	$minAmount.remove();
 	$contAmount.remove();
 	$btnSubmit.remove();
 	$divProdDe.remove();
@@ -42,6 +44,7 @@ export async function App() {
 		inventario: {
 			check: false,
 			cantidad: 0,
+			minAmount: 0,
 		},
 		carta: {
 			check: false,
@@ -152,6 +155,29 @@ export async function App() {
 			} else {
 				$inputAmount.value = '';
 				data.inventario.cantidad = 0;
+			}
+			showBtnSubmit();
+		}
+
+		if (e.target.matches('#minAmountInput')) {
+			const $inputMinAmount = d.getElementById('minAmountInput');
+			const amount = Number($inputMinAmount.value);
+
+			if (!isNaN(amount) && amount !== 0) {
+				const $currentAlert = d.querySelector('.alertAmount');
+				if ($currentAlert) $currentAlert.remove();
+				if(data.inventario.cantidad >= amount){
+					data.inventario.minAmount = amount;
+				}else{
+					const $alertas = d.getElementById('alertas');
+					$alertas.appendChild(Alert('warning alertAmount', 'Cuidado', 'la cantidad debe ser mayor a la cantidad mínima.'));
+					$alertas.querySelector('.alertAmount').classList.remove('alertCaja');
+					$alertas.querySelector('span').innerHTML = '<strong>¡Cuidado! </strong> La cantidad del <strong>producto</strong> debe ser mayor a la cantidad <strong>mínima.</strong>';
+					data.inventario.minAmount = 0;
+				}
+			} else {
+				$inputMinAmount.value = '';
+				data.inventario.minAmount = 0;
 			}
 			showBtnSubmit();
 		}
@@ -347,11 +373,13 @@ export async function App() {
 			$divPrecio.classList.remove('d-none');
 			const $row = $divPrecio.querySelector('.row');
 			$row.appendChild($contAmount);
+			$row.appendChild($minAmount);
 			data.productos = [];
 		} else {
 			$divProdDe.appendChild($divProducts);
 			d.getElementById('amount').value = '';
 			$contAmount.remove();
+			$minAmount.remove();
 			const $allProducts = d.querySelectorAll('.productosPendientes');
 			$allProducts.forEach((el) => {
 				el.querySelector('.mainProd').checked = false;
@@ -450,9 +478,10 @@ export async function App() {
 
 	function valInv() {
 		const cInv = data.inventario.check,
-			cantidadInv = data.inventario.cantidad;
+			cantidadInv = data.inventario.cantidad,
+			minAmount = data.inventario.minAmount;
 
-		return cInv && cantidadInv > 0 ? true : false;
+		return cInv && cantidadInv > 0 && minAmount > 0 ? true : false;
 	}
 
 	function upperCase(text) {
@@ -470,8 +499,7 @@ export async function App() {
 			const name = el.name.toLowerCase();
 			if (name === text) {
 				const $alertas = d.getElementById('alertas');
-				$alertas.innerHTML = '';
-
+				
 				const $currentAlert = d.querySelector('.alertCaja');
 				if ($currentAlert) $currentAlert.remove();
 

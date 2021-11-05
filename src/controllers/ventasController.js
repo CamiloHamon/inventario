@@ -5,6 +5,7 @@ const helpers = require('../helpers/helpers');
 const flMessage = require('../helpers/flash');
 const invModel = require('../models/invModel');
 const obsModel = require('../models/obsModel');
+const notifyAmountProduct = require('../helpers/notifyAmountProduct');
 const venController = {};
 
 venController.salesView = async (req, res, next) => {
@@ -89,6 +90,10 @@ venController.salesEditForm = async (req, res, next) => {
 				);
 				//actualizar el amount del producto padre
 				if (prodPadre.amount > amountAux && !op) {
+					const auxAmount = prodPadre.amount - restaAmount;
+					if(auxAmount <= prodPadre.minAmount){
+						await notifyAmountProduct(prodPadre.name, auxAmount);
+					}
 					await invModel.subAmntProIn(prodPadre.idProduct, amountAux);
 				} else {
 					await invModel.sumAmntProIn(prodPadre.idProduct, amountAux);

@@ -76,6 +76,7 @@ invModel.insertProduct = async (
 	idProduct,
 	name,
 	amount,
+	minAmount,
 	menu,
 	idCaseSpecial
 ) => {
@@ -83,7 +84,7 @@ invModel.insertProduct = async (
 
 	try {
 		insert = await db.query(
-			`INSERT INTO product (idProduct, name, amount, menu, status, fk_idProdCaseSpecial) VALUES (${idProduct}, '${name}', ${amount}, '${menu}', '1', '${idCaseSpecial}')`
+			`INSERT INTO product (idProduct, name, amount, menu, status, fk_idProdCaseSpecial, minAmount) VALUES (${idProduct}, '${name}', ${amount}, '${menu}', '1', '${idCaseSpecial}', '${minAmount}')`
 		);
 	} catch (error) {
 		console.log(error);

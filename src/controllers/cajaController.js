@@ -8,6 +8,7 @@ const fiadosModel = require('../models/fiadosModel');
 const clientModel = require('../models/clientModel');
 const obsModel = require('../models/obsModel');
 const endTurn = require('../helpers/endTurn');
+const notifyAmountProduct = require('../helpers/notifyAmountProduct');
 
 const cajaController = {};
 
@@ -86,6 +87,9 @@ cajaController.register = async (req, res, next) => {
 					regSale.inv = true;
 					regSale.idProdInv = idProduct;
 					prodReg.push(regSale);
+					if(prodPadre.amount <= prodPadre.minAmount){
+						await notifyAmountProduct(prodPadre.name, prodPadre.amount);
+					}
 				} else {
 					failProduct.push({
 						name: prodPadre.name,

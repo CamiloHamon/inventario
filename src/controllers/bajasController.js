@@ -4,6 +4,7 @@ const helpers = require('../helpers/helpers');
 const invModel = require('../models/invModel');
 const flMessage = require('../helpers/flash');
 const turnHelper = require('../helpers/turn');
+const notifyAmountProduct = require('../helpers/notifyAmountProduct');
 
 const bajasController = {};
 
@@ -90,6 +91,11 @@ bajasController.dischargedForm = async (req, res, next) => {
 				regDischarged.inv = true;
 				regDischarged.idProdInv = idProduct; // id del producto padre
 				prodReg.push(regDischarged);
+
+				const auxAmount = prodPadre.amount - regDischarged.amount;
+				if(auxAmount <= prodPadre.minAmount){
+					await notifyAmountProduct(prodPadre.name, auxAmount);
+				}
 			} else {
 				// si no tiene capacidad, se almacena para informar al usuario
 				failProduct.push({
