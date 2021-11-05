@@ -10,7 +10,7 @@ venModel.list = async (date) => {
 	let result = [];
 	for (const v of vendido) {
 		const product = await db.query(
-			`SELECT p.idProduct, p.name, SUM(s.amount) amount, s.idSales, SUM(s.amount * h.price) total, h.price AS unidad FROM historyprice h INNER JOIN product p ON p.idProduct = h.fk_idProduct INNER JOIN sales s ON s.fk_idProduct = p.idProduct WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) AND s.date = '${date}' AND s.fk_idProduct = ${v.idProduct}`
+			`SELECT p.idProduct, p.name, SUM(s.amount) amount, s.idSales, SUM(s.amount * s.price) total FROM product p INNER JOIN sales s ON s.fk_idProduct = p.idProduct WHERE s.date = '${date}' AND s.fk_idProduct = ${v.idProduct}`
 		);
 		result.push(product[0]);
 	}
@@ -26,7 +26,7 @@ venModel.listPeriod = async (date, dateFirst, dateLast) => {
 	let result = [];
 	for (const v of vendido) {
 		const product = await db.query(
-			`SELECT p.idProduct, p.name, SUM(s.amount) amount, s.idSales, SUM(s.amount * h.price) total, h.price AS unidad FROM historyprice h INNER JOIN product p ON p.idProduct = h.fk_idProduct INNER JOIN sales s ON s.fk_idProduct = p.idProduct WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) AND s.date BETWEEN '${dateFirst}' AND '${dateLast}' AND s.fk_idProduct = ${v.idProduct}`
+			`SELECT p.idProduct, p.name, SUM(s.amount) amount, s.idSales, SUM(s.amount * s.price) total, s.price AS unidad FROM product p INNER JOIN sales s ON s.fk_idProduct = p.idProduct WHERE s.date BETWEEN '${dateFirst}' AND '${dateLast}' AND s.fk_idProduct = ${v.idProduct}`
 		);
 		result.push(product[0]);
 	}
@@ -89,44 +89,44 @@ venModel.update = async (idSale, amount) => {
 
 venModel.infoSale = async (idSale, date) => {
 	const venta = await db.query(
-		`SELECT p.idProduct, p.name, s.amount, s.idSales, SUM(s.amount * h.price) total FROM historyprice h INNER JOIN product p ON p.idProduct = h.fk_idProduct INNER JOIN sales s ON s.fk_idProduct = p.idProduct WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) AND s.date = '${date}' AND s.idSales = ${idSale}`
+		`SELECT p.idProduct, p.name, s.amount, s.idSales, SUM(s.amount * s.price) total FROM product p INNER JOIN sales s ON s.fk_idProduct = p.idProduct WHERE s.date = '${date}' AND s.idSales = ${idSale}`
 	);
 	return venta[0];
 };
 
 venModel.seeSale = async (idProduct, date) => {
 	const seeSale = await db.query(
-		`SELECT s.idSales AS no, s.*, u.name, SUM(h.price * s.amount) total FROM sales s INNER JOIN historyprice h ON h.fk_idProduct = s.fk_idProduct INNER JOIN turn ON turn.idTurn = s.fk_idTurn INNER JOIN user u ON u.idUser = turn.fk_idUser WHERE s.date = '${date}' AND h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) AND s.fk_idProduct = ${idProduct} GROUP BY s.idSales ORDER BY s.time`
+		`SELECT s.idSales AS no, s.*, u.name, SUM(s.price * s.amount) total FROM sales s INNER JOIN turn ON turn.idTurn = s.fk_idTurn INNER JOIN user u ON u.idUser = turn.fk_idUser WHERE s.date = '${date}' AND s.fk_idProduct = ${idProduct} GROUP BY s.idSales ORDER BY s.time;`
 	);
 	return seeSale;
 };
 
 venModel.totalProduct = async (idProduct, date) => {
 	const total = await db.query(
-		`SELECT SUM(s.amount * h.price) total FROM historyprice h INNER JOIN product p ON p.idProduct = h.fk_idProduct INNER JOIN sales s ON s.fk_idProduct = p.idProduct WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) AND s.date = '${date}' AND s.fk_idProduct = ${idProduct}`
+		`SELECT SUM(s.amount * s.price) total FROM product p INNER JOIN sales s ON s.fk_idProduct = p.idProduct WHERE s.date = '${date}' AND s.fk_idProduct = ${idProduct}`
 	);
 	return total[0].total;
 };
 
 venModel.total = async (date) => {
 	const total = await db.query(
-		`SELECT SUM(s.amount * h.price) total FROM historyprice h INNER JOIN product p ON p.idProduct = h.fk_idProduct INNER JOIN sales s ON s.fk_idProduct = p.idProduct WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) AND s.date = '${date}'`
+		`SELECT SUM(s.amount * s.price) total FROM product p INNER JOIN sales s ON s.fk_idProduct = p.idProduct WHERE s.date = '${date}'`
 	);
 	return total[0].total;
 };
 
 venModel.totalPartial = async (dateFirst, dateLast) => {
 	const total = await db.query(
-		`SELECT SUM(s.amount * h.price) total FROM historyprice h INNER JOIN product p ON p.idProduct = h.fk_idProduct INNER JOIN sales s ON s.fk_idProduct = p.idProduct WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) AND s.date BETWEEN '${dateFirst}' AND '${dateLast}'`
+		`SELECT SUM(s.amount * s.price) total FROM product p INNER JOIN sales s ON s.fk_idProduct = p.idProduct WHERE s.date BETWEEN '${dateFirst}' AND '${dateLast}'`
 	);
 	return total[0].total;
 };
 
-venModel.insertSale = async (idProduct, idTurn, amount, date, time) => {
+venModel.insertSale = async (idProduct, idTurn, amount, date, time, price) => {
 	let result = false;
 	try {
 		await db.query(
-			`INSERT INTO sales (idSales, date, time, amount, fk_idTurn, fk_idProduct) VALUES (NULL, '${date}', '${time}', '${amount}', '${idTurn}', '${idProduct}')`
+			`INSERT INTO sales (idSales, date, time, amount, fk_idTurn, fk_idProduct, price) VALUES (NULL, '${date}', '${time}', '${amount}', '${idTurn}', '${idProduct}', '${price}')`
 		);
 		result = true;
 	} catch (error) {

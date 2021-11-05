@@ -269,13 +269,16 @@ fiadosController.saldar = async (req, res, next) => {
 
 		for (const t of trust) {
 			const trustSale = (await fiadosModel.findById(t))[0];
+
 			const date = moment.dateMYSQL(trustSale.date); //se registra la venta el dia que se le hace el trust
+			
 			await venModel.insertSale(
 				trustSale.fk_idProduct,
 				idTurn,
 				trustSale.amount,
 				date,
-				time
+				time,
+				trustSale.price,
 			);
 
 			await fiadosModel.saldar(t, idTurn);

@@ -70,13 +70,6 @@ bajasModel.update = async (idD, amount, idDetails) => {
 	return result;
 };
 
-bajasModel.total = async (date) => {
-	const total = await db.query(
-		`SELECT SUM((price) * d.amount) total FROM historyprice h INNER JOIN discharged d ON d.fk_idProduct = h.fk_idProduct WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) AND d.date = '${date}'`
-	);
-	return total[0].total;
-};
-
 bajasModel.insertBaja = async (idProd, idTurn, idDis, amount, date, time) => {
 	let result = false;
 

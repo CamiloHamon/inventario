@@ -62,13 +62,13 @@ cajaController.register = async (req, res, next) => {
 		for (const l of listProducts) {
 			const prodCaseSp = await searchProduct(l);
 			const idProduct = prodCaseSp.idProduct;
-
 			const regSale = {
 				idProduct,
 				idTurn: turnHelper.idTurn(idUser),
 				amount: l.amount,
 				date,
 				time,
+				price: l.price,
 			};
 
 			//validar si es un producto que se debe inventariar
@@ -151,6 +151,7 @@ async function regProdFiados(idClient, prodReg) {
 				amount: pR.amount,
 				date: pR.date,
 				time: pR.time,
+				price: pR.price,
 			});
 			if (!result) return false;
 			if (pR.inv && result) {
@@ -164,7 +165,7 @@ async function regProdFiados(idClient, prodReg) {
 }
 
 async function regFiados(props) {
-	const { idClient, idProduct, idTurn, amount, date, time } = props;
+	const { idClient, idProduct, idTurn, amount, date, time, price } = props;
 
 	return await fiadosModel.insertTrust(
 		idClient,
@@ -172,7 +173,8 @@ async function regFiados(props) {
 		idTurn,
 		amount,
 		date,
-		time
+		time,
+		parseFloat(price.replace(/\./g, '')),
 	);
 }
 
@@ -189,8 +191,8 @@ async function amountProduct(prodCaseSp, prodPadre, inpAmount) {
 }
 
 async function registerSale(props) {
-	const { idProduct, idTurn, amount, date, time } = props;
-	return await venModel.insertSale(idProduct, idTurn, amount, date, time);
+	const { idProduct, idTurn, amount, date, time, price } = props;
+	return await venModel.insertSale(idProduct, idTurn, amount, date, time, parseFloat(price.replace(/\./g, '')),);
 }
 
 function valOnlyRegSale(product) {

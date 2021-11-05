@@ -11,7 +11,7 @@ fiadosModel.list = async () => {
 
 	for (const c of clients) {
 		const trust = await db.query(
-			`SELECT SUM(t.amount) amount, (t.date) date, c.idClient, c.name, c.complement, SUM(t.amount * h.price) total FROM historyprice h INNER JOIN product p ON p.idProduct = h.fk_idProduct INNER JOIN trust t ON t.fk_idProduct = p.idProduct INNER JOIN client c ON c.idClient = t.fk_idClient WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) AND t.fk_idClient = ${c.idClient} AND t.status = 1 ORDER BY t.idTrust`
+			`SELECT SUM(t.amount) amount, (t.date) date, c.idClient, c.name, c.complement, SUM(t.amount * t.price) total FROM product p INNER JOIN trust t ON t.fk_idProduct = p.idProduct INNER JOIN client c ON c.idClient = t.fk_idClient WHERE t.fk_idClient = ${c.idClient} AND t.status = 1 ORDER BY t.idTrust;`
 		);
 		result.push(trust[0]);
 	}
@@ -21,7 +21,7 @@ fiadosModel.list = async () => {
 
 fiadosModel.listTrust = async (idClient) => {
 	const trusts = await db.query(
-		`SELECT t.*, p.name AS nameP, u.name, SUM(h.price * t.amount) total FROM trust t INNER JOIN historyprice h ON h.fk_idProduct = t.fk_idProduct INNER JOIN turn ON turn.idTurn = t.fk_idTurn INNER JOIN user u ON u.idUser = turn.fk_idUser INNER JOIN product p ON t.fk_idProduct = p.idProduct WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) AND t.fk_idClient = ${idClient} AND t.status = 1 GROUP BY t.idTrust ORDER BY t.time`
+		`SELECT t.*, p.name AS nameP, u.name, SUM(t.price * t.amount) total FROM trust t INNER JOIN turn ON turn.idTurn = t.fk_idTurn INNER JOIN user u ON u.idUser = turn.fk_idUser INNER JOIN product p ON t.fk_idProduct = p.idProduct WHERE t.fk_idClient = ${idClient} AND t.status = 1 GROUP BY t.idTrust ORDER BY t.time`
 	);
 	return trusts;
 };
@@ -49,14 +49,14 @@ fiadosModel.findByIdClientIdTrust = async (idTrust, idClient) => {
 
 fiadosModel.total = async (idClient) => {
 	const total = await db.query(
-		`SELECT SUM(t.amount * h.price) total FROM historyprice h INNER JOIN product p ON p.idProduct = h.fk_idProduct INNER JOIN trust t ON t.fk_idProduct = p.idProduct WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) AND t.status = 1 AND t.fk_idClient = ${idClient}`
+		`SELECT SUM(t.amount * t.price) total FROM product p INNER JOIN trust t ON t.fk_idProduct = p.idProduct WHERE t.status = 1 AND t.fk_idClient = ${idClient}`
 	);
 	return total[0].total;
 };
 
 fiadosModel.totalAll = async () => {
 	const total = await db.query(
-		'SELECT SUM(t.amount * h.price) total FROM historyprice h INNER JOIN product p ON p.idProduct = h.fk_idProduct INNER JOIN trust t ON t.fk_idProduct = p.idProduct WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) AND t.status = 1'
+		'SELECT SUM(t.amount * t.price) total FROM product p INNER JOIN trust t ON t.fk_idProduct = p.idProduct WHERE t.status = 1'
 	);
 
 	return total[0].total;
@@ -87,28 +87,28 @@ fiadosModel.saldar = async (idTrust, idTurn) => {
 
 fiadosModel.saldadosHoy = async (date) => {
 	const fiados = await db.query(
-		`SELECT c.name AS cliente, h.price, p.name AS producto FROM trust t INNER JOIN historyprice h ON h.fk_idProduct = t.fk_idProduct INNER JOIN client c ON c.idClient = t.fk_idClient INNER JOIN product p ON p.idProduct = t.fk_idProduct WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) and t.datePay > '${date} 00:00:00' AND t.datePay < '${date} 23:59:59'`
+		`SELECT c.name AS cliente, t.price, p.name AS producto FROM trust t INNER JOIN client c ON c.idClient = t.fk_idClient INNER JOIN product p ON p.idProduct = t.fk_idProduct WHERE t.datePay > '${date} 00:00:00' AND t.datePay < '${date} 23:59:59'`
 	);
 	return fiados;
 };
 
 fiadosModel.saldadosPeriod= async (dateFirst, dateLast) => {
 	const fiados = await db.query(
-		`SELECT c.name AS cliente, h.price, p.name AS producto FROM trust t INNER JOIN historyprice h ON h.fk_idProduct = t.fk_idProduct INNER JOIN client c ON c.idClient = t.fk_idClient INNER JOIN product p ON p.idProduct = t.fk_idProduct WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) and t.datePay > '${dateFirst} 00:00:00' AND t.datePay < '${dateLast} 23:59:59'`
+		`SELECT c.name AS cliente, t.price, p.name AS producto FROM trust t INNER JOIN client c ON c.idClient = t.fk_idClient INNER JOIN product p ON p.idProduct = t.fk_idProduct WHERE t.datePay > '${dateFirst} 00:00:00' AND t.datePay < '${dateLast} 23:59:59'`
 	);
 	return fiados;
 };
 
 fiadosModel.totalSaldadosHoy = async (date) => {
 	const total = await db.query(
-		`SELECT SUM(h.price) as total FROM trust t INNER JOIN historyprice h ON h.fk_idProduct = t.fk_idProduct INNER JOIN client c ON c.idClient = t.fk_idClient INNER JOIN product p ON p.idProduct = t.fk_idProduct WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) and t.datePay > '${date} 00:00:00' AND t.datePay < '${date} 23:59:59'`
+		`SELECT SUM(t.price) as total FROM trust t INNER JOIN client c ON c.idClient = t.fk_idClient INNER JOIN product p ON p.idProduct = t.fk_idProduct WHERE t.datePay > '${date} 00:00:00' AND t.datePay < '${date} 23:59:59'`
 	);
 	return total[0].total;
 };
 
 fiadosModel.totalSaldadosPartial = async (dateFirst, dateLast) => {
 	const total = await db.query(
-		`SELECT SUM(h.price) as total FROM trust t INNER JOIN historyprice h ON h.fk_idProduct = t.fk_idProduct INNER JOIN client c ON c.idClient = t.fk_idClient INNER JOIN product p ON p.idProduct = t.fk_idProduct WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) and t.datePay > '${dateFirst} 00:00:00' AND t.datePay < '${dateLast} 23:59:59'`
+		`SELECT SUM(t.price) as total FROM trust t INNER JOIN client c ON c.idClient = t.fk_idClient INNER JOIN product p ON p.idProduct = t.fk_idProduct WHERE t.datePay > '${dateFirst} 00:00:00' AND t.datePay < '${dateLast} 23:59:59'`
 	);
 	return total[0].total;
 };
@@ -139,7 +139,7 @@ fiadosModel.delAll = async (idClient) => {
 
 fiadosModel.totalTrust = async (idTrust) => {
 	const totalTrust = await db.query(
-		`SELECT SUM(t.amount * h.price) total FROM historyprice h INNER JOIN product p ON p.idProduct = h.fk_idProduct INNER JOIN trust t ON t.fk_idProduct = p.idProduct WHERE h.date = (SELECT MAX(h2.date) FROM historyprice h2 WHERE h2.fk_idProduct = h.fk_idProduct) AND t.status = 1 AND t.idTrust = ${idTrust}`
+		`SELECT SUM(t.amount * t.price) total FROM product p INNER JOIN trust t ON t.fk_idProduct = p.idProduct WHERE t.status = 1 AND t.idTrust = ${idTrust}`
 	);
 	return totalTrust[0].total;
 };
@@ -150,12 +150,13 @@ fiadosModel.insertTrust = async (
 	idTurn,
 	amount,
 	date,
-	time
+	time,
+	price
 ) => {
 	let result = false;
 	try {
 		await db.query(
-			`INSERT INTO trust (idTrust, amount, date, time, status, fk_idTurn, fk_idClient, fk_idProduct) VALUES (NULL, '${amount}', '${date}', '${time}', '1', '${idTurn}', '${idClient}', '${idProduct}')`
+			`INSERT INTO trust (idTrust, amount, date, time, status, fk_idTurn, fk_idClient, fk_idProduct, price) VALUES (NULL, '${amount}', '${date}', '${time}', '1', '${idTurn}', '${idClient}', '${idProduct}', '${price}')`
 		);
 		result = true;
 	} catch (error) {
