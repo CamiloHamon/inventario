@@ -57,10 +57,6 @@ function margin() {
 			const $btnCaja = document.getElementById('menuTurnoCaja');
 			$btnCaja.classList.remove('d-none');
 			const $rowHeader = document.getElementById('rowContentHeader');
-			$rowHeader.classList.replace(
-				'justify-content-end',
-				'justify-content-between'
-			);
 		} else $divMargin.classList.add('mt-md-1');
 	}
 }

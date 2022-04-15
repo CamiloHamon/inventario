@@ -16,6 +16,20 @@ turnoModel.findByDate = async (date) => {
 	return turnos;
 };
 
+turnoModel.findTurnByDate = async (date) => {
+	const turnos = await db.query(
+		`SELECT t.*, p.*, u.*, p.name as cargo FROM turn t INNER JOIN user u ON u.idUser = t.fk_idUser INNER JOIN position p ON p.idPosition = u.fk_idPosition WHERE t.date = '${date}' ORDER BY p.idPosition`
+	);
+	return turnos;
+};
+
+turnoModel.findTurnExceptAdmin = async (date) => {
+	const turnos = await db.query(
+		`SELECT t.*, p.*, u.*, p.name as cargo FROM turn t INNER JOIN user u ON u.idUser = t.fk_idUser INNER JOIN position p ON p.idPosition = u.fk_idPosition WHERE t.date = '${date}' AND p.idPosition != '1' ORDER BY p.idPosition`
+	);
+	return turnos;
+};
+
 turnoModel.findByIdUser = async (idUser, date) => {
 	const turn = await db.query(
 		`SELECT * FROM turn WHERE fk_idUser = ${idUser} AND date = '${date}'`

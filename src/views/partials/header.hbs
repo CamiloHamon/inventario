@@ -15,7 +15,7 @@
             </div>
             <div class="col-9 px-0">
                 <div class="row m-0 text-center align-items-center justify-content-end" id="rowContentHeader">
-                    <div class="col-auto px-0 d-none" id="menuTurnoCaja">
+                    <div class="col-auto d-none" id="menuTurnoCaja">
                         <div class="d-sm-none z-10">
                             <button type="button" class="btn-sm btn btn-primary trigger-menu">
                                 Menú
@@ -24,9 +24,6 @@
                                 </svg>
                             </button>
                         </div>
-                    </div>
-                    <div class="col-auto">
-                        <div class="notify-rounded"><i class="fas fa-bell red"></i></div>
                     </div>
                     <div class="col-auto text-right pl-0">
                         <span class="name-user-header">{{user.name}}</span>
@@ -86,7 +83,6 @@
             <a class="subItem" href="/clientes">CLIENTES</a>
 
             <a class="nav-link" href="/reportes">REPORTES</a>
-            <a class="subItem" href="/reportes/fiados">FIADOS</a>
         </div>
     </div>
 </div>
@@ -154,17 +150,8 @@
                             <div class="btn-group rounded d-none d-md-block px-0 cursor-pointer">
                                 <div class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
-                                    <i class="fas fa-chevron-down red"></i>
-                                </div>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="/reportes/fiados">
-                                        FIADOS
-                                    </a>
                                 </div>
                             </div>
-                        </li>
-                        <li class="nav-item d-md-none">
-                            <a class="nav-link" href="/reportes/fiados" id="empleados">FIADOS</a>
                         </li>
                         {{/if}}
                     </ul>
@@ -172,9 +159,7 @@
             </div>
             <div class="col col-lg-auto pr-0 pr-lg-1 order-12">
                 <div class="row m-0 text-center align-items-center justify-content-end">
-                    <div class="col-auto">
-                        <div class="notify-rounded"><i class="fas fa-bell red"></i></div>
-                    </div>
+                    
                     <div class="col-auto text-right pl-0">
                         <span class="name-user-header">{{user.name}}</span>
                     </div>

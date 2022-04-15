@@ -1,4 +1,5 @@
 const invModel = require('../models/invModel');
+const turnoModel = require('../models/turnoModel');
 
 const turnHelper = {};
 
@@ -11,6 +12,10 @@ turnHelper.idTurn = (idUser) => {
 		}
 	}
 	return id;
+};
+
+turnHelper.findTurnByIdAndDate = async(idUser, date)=>{
+	return turn = await turnoModel.findByIdUser(idUser, date);
 };
 
 turnHelper.completeInfo = (table) => {

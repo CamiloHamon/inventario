@@ -10,6 +10,7 @@ const helper = require("../helpers/helpers");
 const valesModel = require("../models/valModel");
 const invModel = require("../models/invModel");
 const fiadosModel = require("../models/fiadosModel");
+const cashBoxModel = require("../models/cashBoxModel");
 
 const reportes = {};
 
@@ -19,71 +20,79 @@ let total = 0,
   totalTurnosPagados = 0,
   totalVales = 0,
   totalEntradas = 0,
-  totalFiadosPagadosHoy = 0,
-  period = false;
+  totalFiadosPagadosHoy = 0;
 
-reportes.toDay = async (idUser, date, dateFirst, dateLast) => {
+reportes.toDay = async (idUser, date, dateFirst, dateLast, period = false) => {
   restored();
-  const idTurn = turnHelper.idTurn(idUser);
-  const userTurn = await turnoModel.findUserByidTurnInfo(idTurn);
-  let content = getContent(date, userTurn);
 
-  const ventas = await getVentas(content, dateFirst, dateLast);
-  if (ventas) {
-    content = ventas;
-    content += await getTotal(4, "venta", "success", dateFirst, dateLast);
+  let turno = (await turnoModel.findTurnExceptAdmin(date))[0];
+  if(!turno) turno =(await turnoModel.findTurnByDate(date))[0]
+
+  if(turno){
+    const userTurn = { name:turno.name, cargo: turno.cargo, imgProfile: turno.imgProfile };
+    const cashBox =  await cashBoxModel.findByDate(date);
+    const moneyCashBox = new Intl.NumberFormat('es-CO', 'COP', 2, 2500000).format(cashBox[0].amount);
+  
+    let content = getContent(date, userTurn, moneyCashBox, period, dateFirst, dateLast);
+  
+    const ventas = await getVentas(content, dateFirst, dateLast);
+    if (ventas) {
+      content = ventas;
+      content += await getTotal(4, "venta", "success", dateFirst, dateLast);
+    }
+  
+    const gastos = await getGastos(content, dateFirst, dateLast);
+    if (gastos) {
+      content = gastos;
+      content += await getTotal(2, "gastos", "danger", dateFirst, dateLast);
+    }
+  
+    const bajas = await getBajas(content, dateFirst, dateLast);
+    if (bajas) content = bajas;
+  
+    const pagos = await getPagos(content, dateFirst, dateLast);
+    if (pagos) {
+      content = pagos;
+      content += await getTotal(3, "pagos", "danger", dateFirst, dateLast);
+    }
+  
+    const vales = await getVales(content, dateFirst, dateLast);
+    if (vales) {
+      content = vales;
+      content += await getTotal(3, "vales", "danger", dateFirst, dateLast);
+    }
+  
+    const entradas = await getEntradas(content, dateFirst, dateLast);
+    if (entradas) {
+      content = entradas;
+      content += await getTotal(2, "entradas", "primary", dateFirst, dateLast);
+    }
+  
+    const fiadosPagadosHoy = await getFiadosPagadosHoy(content, dateFirst, dateLast);
+    if (fiadosPagadosHoy) {
+      content = fiadosPagadosHoy;
+      content += await getTotal(2, "fiadosHoy", "success", dateFirst, dateLast);
+    }
+  
+    total =
+      totalVendido +
+      totalFiadosPagadosHoy -
+      totalGastos -
+      totalTurnosPagados -
+      totalVales -
+      totalEntradas;
+  
+    content = getGananciaTotal(content, total);
+    if (total > 0) content += await getTotal(1, "total", "success");
+    else content += await getTotal(1, "total", "danger");
+  
+    content += `        </div>
+                      </body>
+                  </html>`;
+  
+    return content;
   }
-
-  const gastos = await getGastos(content, dateFirst, dateLast);
-  if (gastos) {
-    content = gastos;
-    content += await getTotal(2, "gastos", "danger", dateFirst, dateLast);
-  }
-
-  const bajas = await getBajas(content, dateFirst, dateLast);
-  if (bajas) content = bajas;
-
-  const pagos = await getPagos(content, dateFirst, dateLast);
-  if (pagos) {
-    content = pagos;
-    content += await getTotal(3, "pagos", "danger", dateFirst, dateLast);
-  }
-
-  const vales = await getVales(content, dateFirst, dateLast);
-  if (vales) {
-    content = vales;
-    content += await getTotal(3, "vales", "danger", dateFirst, dateLast);
-  }
-
-  const entradas = await getEntradas(content, dateFirst, dateLast);
-  if (entradas) {
-    content = entradas;
-    content += await getTotal(2, "entradas", "primary", dateFirst, dateLast);
-  }
-
-  const fiadosPagadosHoy = await getFiadosPagadosHoy(content, dateFirst, dateLast);
-  if (fiadosPagadosHoy) {
-    content = fiadosPagadosHoy;
-    content += await getTotal(2, "fiadosHoy", "success", dateFirst, dateLast);
-  }
-
-  total =
-    totalVendido +
-    totalFiadosPagadosHoy -
-    totalGastos -
-    totalTurnosPagados -
-    totalVales -
-    totalEntradas;
-
-  content = getGananciaTotal(content, total);
-  if (total > 0) content += await getTotal(1, "total", "success");
-  else content += await getTotal(1, "total", "danger");
-
-  content += `        </div>
-                    </body>
-                </html>`;
-
-  return content;
+  return null;
 };
 
 async function getVentas(content, dateFirst, dateLast) {
@@ -527,8 +536,8 @@ async function completePay(pays) {
   return pays;
 }
 
-function getContent(date, userTurn) {
-  return `
+function getContent(date, userTurn, cashBox, period, dateFirst, dateLast) {
+  let content = `
     <!DOCTYPE html>
         <html lang="en">
 
@@ -585,33 +594,49 @@ function getContent(date, userTurn) {
                                 <strong>CELULAR: 323 326 69 35</strong><br>
                                 <strong>DIRECCION: BOSA RECREO</strong><br>
                             </div>
-                            <div class="col-3 text-right" style="font-size: 9pt;">
-                                <strong>FECHA: ${date} </strong>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row justify-content-center align-items-center mb-3">
-                    <div class="col-8 border border-right-0 rounded-left">
-                        <div class="row border-bottom">
-                            <div class="col-4 border-right text-right" style="font-size: 11pt;"><strong>NOMBRE:</strong></div>
-                            <div class="col-4 text-uppercase">${userTurn.name}</div>
-                        </div>
-                        <div class="row border-bottom">
-                            <div class="col-4 border-right text-right" style="font-size: 11pt;"><strong>CARGO:</strong></div>
-                            <div class="col-4 text-uppercase">${userTurn.cargo}</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4 border-right text-right" style="font-size: 11pt;"><strong>BASE:</strong></div>
-                            <div class="col-4">65000</div>
-                        </div>
-                    </div>
-                    <div class="border rounded-circle" style="width: 73px!important; height: 73px!important;">
-                        <img src="http://localhost:3100/img/imgProfile/${userTurn.imgProfile}" alt="" class="img-fluid">
-                    </div>
-                </div>
     `;
+    if(!period){
+      content += `<div class="col-3 text-right" style="font-size: 9pt;">
+      <strong>FECHA: ${date} </strong>
+      </div>
+      </div>
+      </div>
+      </div>`
+    }else{
+      content += `<div class="col-3" style="font-size: 9pt;">
+      <strong>FECHA: </strong>
+      <br>
+      <strong>DE: ${dateFirst} </strong>
+      <br>
+      <strong>HASTA: ${dateLast} </strong>
+      </div>
+    </div>
+    </div>
+    </div>`
+    }
+
+    if(!period){
+      content += `<div class="row justify-content-center align-items-center mb-3">
+      <div class="col-8 border border-right-0 rounded-left">
+          <div class="row border-bottom">
+              <div class="col-4 border-right text-right" style="font-size: 11pt;"><strong>NOMBRE:</strong></div>
+              <div class="col-4 text-uppercase">${userTurn.name}</div>
+          </div>
+          <div class="row border-bottom">
+              <div class="col-4 border-right text-right" style="font-size: 11pt;"><strong>CARGO:</strong></div>
+              <div class="col-4 text-uppercase">${userTurn.cargo}</div>
+          </div>
+          <div class="row">
+              <div class="col-4 border-right text-right" style="font-size: 11pt;"><strong>BASE:</strong></div>
+              <div class="col-4">$${cashBox}</div>
+          </div>
+      </div>
+      <div class="border rounded-circle" style="width: 73px!important; height: 73px!important;">
+          <img src="http://localhost:3100/img/imgProfile/${userTurn.imgProfile}" alt="" class="img-fluid">
+      </div>
+  </div>`;
+    }
+    return content;
 }
 
 function restored() {
@@ -622,7 +647,6 @@ function restored() {
   totalVales = 0;
   totalEntradas = 0;
   totalFiadosPagadosHoy = 0;
-  period = false;
 }
 
 module.exports = reportes;
